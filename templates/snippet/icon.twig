@@ -1,0 +1,32 @@
+{# --- Parameters ------------------------- #}
+
+{% set _icon      = icon %}
+{% set _classes   = classes   | default(null) %}
+{% set _modifiers = modifiers | default(null) %}
+{% set _arialabel = ariaLabel | default('') %}
+{% set _attr = attr | default({}) %}
+
+{# --- Computed --------------------------- #}
+
+{% set _icon_classes = html_tokens('c-icon', _modifiers, _classes) %}
+
+{% set _icon_attrs = merge({
+    'class':     _icon_classes,
+}, _attr) %}
+
+{% set svg_classes = 'svg-' ~ _icon %}
+
+{# ---------------------------------------- #}
+
+{% if _icon %}
+    <span
+        {{ html_attributes(_icon_attrs) }}
+    >
+        {% if _arialabel %}
+            <span class="sr-only">{{ _arialabel }}</span>
+        {% endif %}
+        <svg class="{{ svg_classes }}" focusable="false" aria-hidden="true">
+            <use xlink:href="/sprite.svg?v={{ 'now' | date('U') }}#{{ _icon }}"></use>
+        </svg>
+    </span>
+{% endif %}

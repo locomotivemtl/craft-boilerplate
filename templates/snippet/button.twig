@@ -1,0 +1,54 @@
+{% set _tag         = tag | default('button') %}
+{% set _href        = href | default(null) %}
+{% set _external    = external ?? false %}
+{% set _classes     = classes | default(null) %}
+{% set _modifiers   = modifiers | default(null) %}
+{% set _label       = label | default(null) %}
+{% set _icon        = icon | default(null) %}
+{% set _attr        = attr | default({}) %}
+
+{# --- Computed --------------------------- #}
+
+{% if _href != null %}
+    {% set _tag = 'a' %}
+{% elseif _tag == 'a' %}
+    {% set _tag = 'span' %}
+{% endif %}
+
+{% set _is_anchor = (_tag == 'a') %}
+
+{% set _button_classes = html_tokens(
+    'c-button',
+    _modifiers,
+    _classes
+) %}
+
+{% set _button_attrs = merge({
+    'class':     _button_classes,
+    'href':      if(_is_anchor, _href),
+    'target':    (target is defined) ? target : if((_is_anchor and _external), '_blank'),
+    'rel':       if((_is_anchor and _external), 'noopener noreferrer'),
+    'data-load': if((_is_anchor and _external), 'false'),
+}, _attr) %}
+
+{# ---------------------------------------- #}
+
+<{{ _tag }}{{ html_attributes(_button_attrs) }}>
+    <span class="c-button_label">
+        {{ _label|raw }}
+    </span>
+
+    {% if _icon %}
+        {% if _icon | length > 1 %}
+            {% include "snippet/icon" with {
+                classes: 'c-button_icon',
+                icon: _icon,
+                attr: {
+                    'aria-hidden': 'true'
+                }
+            } only %}
+        {% else %}
+            <span class="c-button_icon" aria-hidden="true">{{_icon}}</span>
+        {% endif %}
+    {% endif %}
+</{{ _tag }}>

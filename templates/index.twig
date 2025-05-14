@@ -1,0 +1,59 @@
+{% extends "layout/base" %}
+
+{% block content %}
+
+    <header class="container">
+        <h1 class="heading-h1">Welcome to the Locomotive Craft Boilerplate.</h1>
+    </header>
+
+    <div class="my-fluid-xl container">
+        <div class="gap-x-gutter gap-y-fluid-lg grid grid-cols-12">
+            <div class="col-span-full md:col-span-4 flex flex-col gap-gutter items-start">
+                <div class="c-wysiwyg">
+                    <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Itaque quam, nam omnis sunt laudantium tenetur obcaecati? Inventore eos vitae id repellat cum possimus voluptates nam voluptatum, assumenda, atque nesciunt debitis?</p>
+                </div>
+
+                {% include 'snippet/button' with {
+                    label: 'Design system',
+                    href: '/design-system'
+                } %}
+            </div>
+
+            <div class="col-span-full md:col-span-4 flex flex-col gap-gutter items-start">
+                <div class="c-wysiwyg">
+                    <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Itaque quam, nam omnis sunt laudantium tenetur obcaecati? Inventore eos vitae id repellat cum possimus voluptates nam voluptatum, assumenda, atque nesciunt debitis?</p>
+                </div>
+
+                {% include 'snippet/button' with {
+                    label: 'Visit us',
+                    href: 'https://locomotive.ca/',
+                    external: true
+                } %}
+            </div>
+
+            <div class="col-span-full md:col-span-4 flex flex-col gap-gutter items-start">
+                <div class="c-wysiwyg">
+                    <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Itaque quam, nam omnis sunt laudantium tenetur obcaecati? Inventore eos vitae id repellat cum possimus voluptates nam voluptatum, assumenda, atque nesciunt debitis?</p>
+                </div>
+            </div>
+
+            <div class="col-span-full md:col-span-4 flex flex-col">
+                {% for i in 1..4 %}
+                    {% embed "partial/accordion" with {
+                        title: 'Accordion summary'
+                    } only %}
+                        {% block default %}
+                            <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Itaque quam, nam omnis sunt laudantium tenetur obcaecati? Inventore eos vitae id repellat cum possimus voluptates nam voluptatum, assumenda, atque nesciunt debitis?</p>
+                        {% endblock %}
+                    {% endembed %}
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+    {% for i in 1..4 %}
+        <!-- Placeholder -->
+        <div class="mt-fluid-xl h-[50vh] w-full bg-gray-100 opacity-50"></div>
+        <div class="mt-fluid-xl bg-grey h-[50vh] w-full"></div>
+    {% endfor %}
+{% endblock %}

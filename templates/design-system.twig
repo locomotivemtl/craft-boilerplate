@@ -1,0 +1,16 @@
+{% extends "layout/base" %}
+
+{% block content %}
+    <div class="container">
+        <h1 class="my-fluid-xl">Design system</h1>
+
+        {% include "snippet/image" with {
+            img: {
+                src: "https://locomotive.ca/uploads/careers/fullscreen-image-2000w.jpg",
+                width: 1217,
+                height: 813,
+            },
+            classes: ""
+        } only %}
+    </div>
+{% endblock %}

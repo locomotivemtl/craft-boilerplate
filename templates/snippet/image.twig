@@ -1,0 +1,90 @@
+{#
+    Image snippet
+    =======================================
+
+    The `img` parameter was made to receive formatted data from a CMS.
+    The use case would be to output an image without overriding is dimensions
+    or other properties.
+
+    It needs to be an object with the following keys:
+
+    - src: string
+    - width: int
+    - height: int
+    - alt?: string
+    - caption?: string
+
+    ```twig
+    {% include 'image' with {
+        img: project.featured_image
+    } %}
+    ```
+
+    ```twig
+    {% include 'image' with project.featured_image %}
+    ```
+#}
+
+{# --- Parameters ------------------------- #}
+
+{# Defaults #}
+{% set _img = img | default({}) %}
+
+{% set _width   = width   | default(_img.width   | default(1)) %}
+{% set _height  = height  | default(_img.height  | default(1)) %}
+{% set _src     = src     | default(_img.src     | default(null)) %}
+{% set _alt     = alt     | default(_img.alt     | default(null)) %}
+{% set _caption = caption | default(_img.caption | default(null)) %}
+{% set _attr    = attr    | default({}) %}
+
+{# Misc. #}
+{% set _is_figure         = is_figure ?? false %}
+{% set _is_lazy_load      = is_lazy_load ?? true %}
+
+{# Classes & modifiers #}
+{% set _classes   = classes | default(null) %}
+{% set _modifiers = modifiers | default(null) %}
+
+{# --- Computed --------------------------- #}
+{% set _tag = _is_figure ? 'figure' : 'div' %}
+
+{% set _container_classes = html_tokens(
+    'c-image',
+    _classes,
+    _modifiers,
+    if(_is_lazy_load, '-lazy-load'),
+) %}
+
+{% set _container_attrs = merge({
+    'class': _container_classes,
+}, _attr) %}
+
+{% set _img_attrs = {
+    'class':       'c-image_img',
+    'alt':         _alt ?? '',
+    'width':       _width,
+    'height':      _height,
+    'src':         _src,
+    'loading':     (_is_lazy_load ? 'lazy' : 'eager'),
+    'onload':      (_is_lazy_load ? "this.classList.add('is-loaded'); this.parentNode.parentNode.classList.add('is-loaded');" : '')
+} %}
+
+{% if _src %}
+    <{{_tag}}{{ html_attributes(_container_attrs) }}>
+        <div class="c-image_inner">
+            <img{{ html_attributes(_img_attrs) }}>
+        </div>
+
+        {% if _caption %}
+            {% if _is_figure %}
+                <figcaption class="c-image_description">
+                    {{- _caption|raw -}}
+                </figcaption>
+            {% else %}
+                <div class="c-image_description">
+                    <span>{{ _caption|raw }}</span>
+                </div>
+            {% endif %}
+        {% endif %}
+    </{{ _tag }}>
+{% endif %}
