@@ -1,4 +1,5 @@
 import type { UserConfig } from 'vite';
+import { defaultAllowedOrigins } from 'vite';
 import { globSync } from 'glob';
 import tsconfigPaths from 'vite-tsconfig-paths';
 import autoprefixer from 'autoprefixer';
@@ -43,7 +44,19 @@ export default {
         manifest: 'manifest.json',
         outDir: `web/dist/`,
         rollupOptions: {
-            input: inputFiles
+            input: inputFiles,
+            output: {
+                // Custom logic: don't hash `sprite.svg`, hash everything else
+                assetFileNames: (assetInfo) => {
+                    const fileNames = assetInfo.names ?? '';
+                    for(let fileName of fileNames) {
+                        if (fileName.endsWith('sprite.svg')) {
+                            return 'sprite.svg'; // no hash
+                        }
+                    }
+                    return '[name]-[hash][extname]'; // default for others
+                }
+            }
         }
     },
     css: {
@@ -56,7 +69,7 @@ export default {
         tsconfigPaths(),
         ViteSvgSpriteWrapper({
             icons: './src/assets/svgs/*.svg',
-            outputDir: './web/',
+            outputDir: './web/dist',
             sprite: {
                 shape: {
                     transform: [

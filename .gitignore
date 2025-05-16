@@ -10,7 +10,6 @@ loconfig.*.json
 .prettierrc
 /web/uploads/*
 /web/dist/
-/web/sprite.svg
 vite.config.local.ts
 
 # Unsure about those
