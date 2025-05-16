@@ -6,6 +6,9 @@ import tailwindcss from '@tailwindcss/vite';
 import postcssUtopia from 'postcss-utopia';
 import postcssHelpersFunctions from '@locomotivemtl/postcss-helpers-functions';
 import ViteSvgSpriteWrapper from 'vite-svg-sprite-wrapper';
+import dotenv from 'dotenv'
+
+dotenv.config()
 
 const inputFiles = globSync(
     [
@@ -80,7 +83,8 @@ export default {
         }
     ],
     server: {
-        cors: true
+        cors: true,
+        port: process.env.VITE_SERVER_PORT
     },
     ...ddevConfig,
     ...localConfig

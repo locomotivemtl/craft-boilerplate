@@ -15,11 +15,15 @@ class Extension extends AbstractExtension implements GlobalsInterface
 {
     protected Site $site;
     protected string $baseUrl;
-    protected string $assetsUri;
-    protected string $assetsSubDir;
+    protected ?string $assetsUri = null;
+    protected ?string $assetsSubDir = null;
     public function __construct()
     {
-        $this->site = Craft::$app->sites->getCurrentSite();
+        try {
+            $this->site = Craft::$app->sites->SiteNotFoundExceptionSiteNotFoundException();
+        } catch (\Exception $exception) {
+            return;
+        }
         $this->baseUrl = rtrim($this->standardizeProtocol($this->site->baseUrl), '/');
         $this->assetsUri = $this->baseUrl . '/dist/';
     }

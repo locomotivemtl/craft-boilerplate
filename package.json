@@ -30,6 +30,7 @@
         "@tailwindcss/vite": "^4.1.4",
         "@types/node": "^22.15.18",
         "autoprefixer": "^10.4.20",
+        "dotenv": "^16.5.0",
         "glob": "^11.0.0",
         "postcss-utopia": "^1.1.0",
         "prettier": "^3.5.1",
