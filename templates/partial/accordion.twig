@@ -1,39 +1,31 @@
 {# --- Parameters ------------------------- #}
 
-{% set _classes     = classes | default(null) %}
-{% set _modifiers   = modifiers | default('') %}
-{% set _attr        = attr | default({}) %}
+{% set _classes = classes|default(null) %}
+{% set _modifiers = modifiers|default("") %}
+{% set _attr = attr|default({}) %}
 
-{% set _title       = title | default('') %}
+{% set _title = title|default("") %}
 
 {# --- Computed --------------------------- #}
 
-{% set _el_classes = html_tokens(
-    'c-accordion',
-    _modifiers,
-    _classes
-) %}
+{% set _el_classes = html_tokens("c-accordion", _modifiers, _classes) %}
 
-{% set _el_attrs = merge({
-    'class': _el_classes,
-    'is': 'c-accordion'
-}, _attr) %}
+{% set _el_attrs = merge({ class: _el_classes }, _attr) %}
 
 {# ---------------------------------------- #}
 
 <c-accordion {{ html_attributes(_el_attrs) }}>
     <details class="c-accordion_details">
         <summary class="c-accordion_summary">
-            <span class="c-accordion_label || c-heading -h3">
-                {{ _title }}
-            </span>
+            <span class="c-accordion_label || c-heading -h3">{{ _title }}</span>
             <span class="c-accordion_icon" aria-hidden="true">&darr;</span>
         </summary>
         <div class="c-accordion_content" data-accordion="content">
             {% block default %}
+
             {% endblock %}
         </div>
     </details>
 </c-accordion>
 
-{{ craft.vite.script('src/scripts/components/Accordion.ts') }}
+{{ craft.vite.script("src/scripts/components/Accordion.ts") }}

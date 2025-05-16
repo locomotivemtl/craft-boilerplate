@@ -1,17 +1,14 @@
 <header>
-    <c-header class="py-fluid-md container grid grid-cols-2 mb-fluid-lg">
-        <a href="/" class="flex gap-gutter items-center justify-self-start hocus:opacity-80">
-            <div class="sr-only">Home</div>
-            {% include 'snippet/icon' with {
-                icon: 'logo'
-            } %}
-            {% include 'snippet/icon' with {
-                icon: 'craft',
-                classes: 'text-[#e5422b]'
-            } %}
+    <c-header class="container mb-fluid-lg grid grid-cols-2 py-fluid-md">
+        <a href="/" class="flex items-center gap-gutter justify-self-start hocus:opacity-80">
+            <div class="sr-only">
+                Home
+            </div>
+            {% include "snippet/icon" with { icon: "logo" } %}
+            {% include "snippet/icon" with { icon: "craft", classes: "text-[#e5422b]" } %}
         </a>
 
-        <nav class="gap-gutter flex justify-self-end">
+        <nav class="flex gap-gutter justify-self-end">
             <a href="/">Index</a>
             <a href="/design-system">Design system</a>
         </nav>

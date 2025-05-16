@@ -5,13 +5,9 @@ class Example extends HTMLElement {
         super();
     }
 
-    connectedCallback() {
+    connectedCallback() {}
 
-    }
-
-    disconnectedCallback() {
-
-    }
+    disconnectedCallback() {}
 }
 
 customElements.define('c-example', ComponentElement(Example, 'Example'));

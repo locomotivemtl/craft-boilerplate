@@ -1,20 +1,19 @@
-Craft Project Boilerplate
-============================
+# Craft Project Boilerplate
 
 The goal of this project is to provide a fully working "boilerplate" (empty skeleton project) using the CraftCMS project.
 
 # Table of Content
 
 - [How to Install](#how-to-install)
-    + [1. Installing the boilerplate](#1-installing-the-boilerplate)
-    + [2. Setup your local environment](#2-setup-your-local-environment)
-    + [3. Setup Vite](#3-setup-vite)
-    + [4. Setup front-end tools](#4-setup-front-end-tools)
-    + [5. Test your installation](#5-test-your-installation)
+    - [1. Installing the boilerplate](#1-installing-the-boilerplate)
+    - [2. Setup your local environment](#2-setup-your-local-environment)
+    - [3. Setup Vite](#3-setup-vite)
+    - [4. Setup front-end tools](#4-setup-front-end-tools)
+    - [5. Test your installation](#5-test-your-installation)
 - [Dependencies and requirements](#dependencies-and-requirements)
 - [Development](#development)
-    + [Development dependencies](#development-dependencies)
-    + [Authors](#authors)
+    - [Development dependencies](#development-dependencies)
+    - [Authors](#authors)
 
 # How to Install
 
@@ -31,6 +30,7 @@ composer create-project --prefer-dist locomotivemtl/craft-boilerplate acme
 ## 2. **Setup your local environment**
 
 ### Using Laravel Valet
+
 ```shell
 # Move into your project's directory
 cd acme
@@ -41,7 +41,7 @@ valet isolate 8.2
 # Install the dependencies
 valet composer install
 
-# Run the valet installer. 
+# Run the valet installer.
 valet php craft install
 
 # Enable the Vite plugin
@@ -74,6 +74,7 @@ npm install
 ## 5. **Test your installation**
 
 Start your Vite server
+
 ```shell
 npm run dev
 ```
@@ -81,16 +82,20 @@ npm run dev
 Visit your project locally http://acme.test
 
 # Dependencies and Requirements
+
 - [`PHP 8.2+`](http://php.net)
-    + `ext-json`
-    + `ext-pdo`
-    + `ext-spl`
-    + `ext-mbstring`
+    - `ext-json`
+    - `ext-pdo`
+    - `ext-spl`
+    - `ext-mbstring`
 
 # Development
+
 ## Development dependencies
-* [`Node v20.14`](https://nodejs.org/en/blog/release/v20.14.0https://nodejs.org/en/blog/release/v20.14.0)
-* [`NPM v10.8.2`](https://www.npmjs.com/)
+
+- [`Node v20.14`](https://nodejs.org/en/blog/release/v20.14.0https://nodejs.org/en/blog/release/v20.14.0)
+- [`NPM v10.8.2`](https://www.npmjs.com/)
 
 ## Authors
+
 - [Locomotive, a Montreal Web agency](https://locomotive.ca)

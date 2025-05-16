@@ -32,7 +32,7 @@
         // Skip typechecking libraries and .d.ts files
         "skipLibCheck": true,
         // Allow JavaScript files to be imported
-        "allowJs": true,
-    },
+        "allowJs": true
+    }
     // "include": ["src/**/*", "types/**/*"] // Can't make this work without postcss-utopia triggering error in vite.config.ts
 }

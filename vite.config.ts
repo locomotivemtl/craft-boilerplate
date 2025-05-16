@@ -7,21 +7,14 @@ import tailwindcss from '@tailwindcss/vite';
 import postcssUtopia from 'postcss-utopia';
 import postcssHelpersFunctions from '@locomotivemtl/postcss-helpers-functions';
 import ViteSvgSpriteWrapper from 'vite-svg-sprite-wrapper';
-import dotenv from 'dotenv'
+import dotenv from 'dotenv';
 
-dotenv.config()
+dotenv.config();
 
 const inputFiles = globSync(
-    [
-        'src/scripts/main.ts',
-        'src/scripts/components/**/*.ts',
-        'src/styles/main.css',
-    ],
+    ['src/scripts/main.ts', 'src/scripts/components/**/*.ts', 'src/styles/main.css'],
     {
-        ignore: [
-            'src/scripts/components/Example.ts',
-            'src/scripts/components/globals/**/*.ts'
-        ]
+        ignore: ['src/scripts/components/Example.ts', 'src/scripts/components/globals/**/*.ts']
     }
 ).map((file) => {
     return file;
@@ -49,7 +42,7 @@ export default {
                 // Custom logic: don't hash `sprite.svg`, hash everything else
                 assetFileNames: (assetInfo) => {
                     const fileNames = assetInfo.names ?? '';
-                    for(let fileName of fileNames) {
+                    for (let fileName of fileNames) {
                         if (fileName.endsWith('sprite.svg')) {
                             return 'sprite.svg'; // no hash
                         }
@@ -96,9 +89,7 @@ export default {
         }
     ],
     server: {
-        cors: [
-            defaultAllowedOrigins
-        ],
+        cors: [defaultAllowedOrigins],
         port: process.env.VITE_SERVER_PORT
     },
     ...ddevConfig,

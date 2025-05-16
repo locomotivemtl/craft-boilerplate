@@ -6,12 +6,10 @@ class Header extends HTMLElement {
     }
 
     connectedCallback() {
-        this.classList.add('bg-gray-100')
+        this.classList.add('bg-gray-100');
     }
 
-    disconnectedCallback() {
-
-    }
+    disconnectedCallback() {}
 }
 
 customElements.define('c-header', ComponentElement(Header, 'Header'));

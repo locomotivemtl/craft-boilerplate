@@ -11,7 +11,7 @@
 }
 
 @utility container-small {
-    @apply px-unit-sm mx-auto max-w-none!;
+    @apply mx-auto max-w-none! px-unit-sm;
 }
 
 @utility animations-reduced {

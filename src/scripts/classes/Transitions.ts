@@ -72,7 +72,7 @@ export class Transitions {
                 new SwupScriptsPlugin(),
                 new SwupFormsPlugin({
                     stripEmptyParams: true
-                }),
+                })
                 // new SwupFragmentPlugin({
                 //     rules: [
                 //         {

@@ -248,7 +248,6 @@ class Foo extends HTMLElement {
 customElements.define('c-foo', ComponentElement(Foo, 'Foo'));
 ```
 
-
 2. **Access component instances from `$componentsManager`:**
 
 You can use `$componentsManager.get()` or one of the following helpers `getComponentsByPrototype()` and `getComponentsById()` to retrieve the current list of components and interact with them.
