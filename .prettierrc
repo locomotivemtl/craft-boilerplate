@@ -1,0 +1,19 @@
+{
+    "useTabs": false,
+    "tabWidth": 4,
+    "singleQuote": true,
+    "trailingComma": "none",
+    "semi": true,
+    "printWidth": 100,
+    "tailwindStylesheet": "./src/styles/main.css",
+    "twigSingleQuote": false,
+    "twigAlwaysBreakObjects": false,
+    "twigMultiTags": [
+        "nav,endnav",
+        "switch,case,default,endswitch",
+        "ifchildren,endifchildren",
+        "cache,endcache",
+        "tag,endtag"
+    ],
+    "plugins": ["@zackad/prettier-plugin-twig", "prettier-plugin-tailwindcss"]
+}

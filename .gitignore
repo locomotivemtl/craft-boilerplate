@@ -7,7 +7,7 @@ node_modules
 Thumbs.db
 loconfig.*.json
 !loconfig.example.json
-.prettierrc
+
 /web/uploads/*
 /web/dist/
 vite.config.local.ts
