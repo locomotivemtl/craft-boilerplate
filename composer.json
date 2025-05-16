@@ -1,6 +1,26 @@
 {
+    "name": "locomotivemtl/craft-boilerplate",
+    "description": "A modern CraftCMS project boilerplate.",
     "minimum-stability": "dev",
     "prefer-stable": true,
+    "authors": [
+        {
+            "name": "Locomotive",
+            "homepage": "https://locomotive.ca"
+        },
+        {
+            "name": "Pascal Rioux",
+            "email": "pascal@locomotive.ca"
+        },
+        {
+            "name": "Jérémy Minié",
+            "email": "jeremy@locomotive.ca"
+        }
+    ],
+    "support": {
+        "source": "https://github.com/locomotivemtl/craft-boilerplate",
+        "issues": "https://github.com/locomotivemtl/craft-boilerplate/issues"
+    },
     "require": {
         "craftcms/aws-s3": "^2.2",
         "craftcms/ckeditor": "^4.8.0",
