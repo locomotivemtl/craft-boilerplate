@@ -12,7 +12,8 @@ loconfig.*.json
 /web/dist/
 vite.config.local.ts
 
-# Unsure about those
-config/htmlpurifier
-config/project/*
+# [BOILERPLATE-ONLY]
+config/htmlpurifier/
+config/project/
 config/license*
+# [/BOILERPLATE-ONLY]
