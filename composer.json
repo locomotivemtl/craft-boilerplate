@@ -22,6 +22,7 @@
         "issues": "https://github.com/locomotivemtl/craft-boilerplate/issues"
     },
     "require": {
+        "php": ">=8.2",
         "craftcms/aws-s3": "^2.2",
         "craftcms/ckeditor": "^4.8.0",
         "craftcms/cms": "^5.0.0",
