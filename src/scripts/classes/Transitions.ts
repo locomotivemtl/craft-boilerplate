@@ -1,5 +1,4 @@
 import { toDash } from '@scripts/utils/string';
-// import SwupHeadPlugin from '@swup/head-plugin';
 import SwupFormsPlugin from '@swup/forms-plugin';
 import SwupPreloadPlugin from '@swup/preload-plugin';
 import SwupScriptsPlugin from '@swup/scripts-plugin';
@@ -66,10 +65,6 @@ export class Transitions {
             linkSelector: 'a[href]:not(#wpadminbar a)',
             linkToSelf: 'navigate',
             plugins: [
-                // new SwupHeadPlugin({
-                //     persistAssets: true,
-                //     awaitAssets: true
-                // }),
                 new SwupPreloadPlugin({
                     preloadHoveredLinks: true,
                     preloadInitialPage: !import.meta.env.DEV
