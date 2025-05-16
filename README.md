@@ -61,6 +61,8 @@ Add vite configurations to .env file
 ```dotenv
 VITE_SERVER_URL="http://localhost"
 VITE_SERVER_PORT=5173
+# Make sure to set the environment to 'dev'. Otherwise, Craft won't be looking for the Vite server.
+CRAFT_ENVIRONMENT=dev
 ```
 
 ## 4. **Setup front-end tools**
@@ -70,8 +72,6 @@ npm install
 ```
 
 ## 5. **Test your installation**
-
-> ⚠️ Make sure that the Craft installer added the CRAFT_ENVIRONMENT variable to the .env. If not add it and set it to "dev". 
 
 Start your Vite server
 ```shell
