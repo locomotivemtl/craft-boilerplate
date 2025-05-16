@@ -14,6 +14,4 @@ class Header extends HTMLElement {
     }
 }
 
-customElements.define('c-header', ComponentElement(Header, 'Header'), {
-    extends: 'header'
-});
+customElements.define('c-header', ComponentElement(Header, 'Header'));

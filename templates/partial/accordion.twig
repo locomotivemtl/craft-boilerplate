@@ -21,17 +21,19 @@
 
 {# ---------------------------------------- #}
 
-<details {{ html_attributes(_el_attrs) }}>
-    <summary class="c-accordion_summary" data-accordion="summary">
-        <span class="c-accordion_label || c-heading -h3">
-            {{ _title }}
-        </span>
-        <span class="c-accordion_icon" aria-hidden="true">&darr;</span>
-    </summary>
-    <div class="c-accordion_content" data-accordion="content">
-        {% block default %}
-        {% endblock %}
-    </div>
-</details>
+<c-accordion {{ html_attributes(_el_attrs) }}>
+    <details class="c-accordion_details">
+        <summary class="c-accordion_summary">
+            <span class="c-accordion_label || c-heading -h3">
+                {{ _title }}
+            </span>
+            <span class="c-accordion_icon" aria-hidden="true">&darr;</span>
+        </summary>
+        <div class="c-accordion_content" data-accordion="content">
+            {% block default %}
+            {% endblock %}
+        </div>
+    </details>
+</c-accordion>
 
 {{ craft.vite.script('src/scripts/components/Accordion.ts') }}
