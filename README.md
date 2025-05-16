@@ -59,7 +59,7 @@ php craft plugin/install vite
 Add vite configurations to .env file
 
 ```dotenv
-VITE_SERVER_URL="https://localhost"
+VITE_SERVER_URL="http://localhost"
 VITE_SERVER_PORT=5173
 ```
 
@@ -70,6 +70,8 @@ npm install
 ```
 
 ## 5. **Test your installation**
+
+> ⚠️ Make sure that the Craft installer added the CRAFT_ENVIRONMENT variable to the .env. If not add it and set it to "dev". 
 
 Start your Vite server
 ```shell
