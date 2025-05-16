@@ -96,7 +96,9 @@ export default {
         }
     ],
     server: {
-        cors: true,
+        cors: [
+            defaultAllowedOrigins
+        ],
         port: process.env.VITE_SERVER_PORT
     },
     ...ddevConfig,
