@@ -21,11 +21,15 @@ To start a CraftCMS project with this Boilerplate, simply:
 
 ## 1. **Installing the boilerplate**
 
-Charcoal uses the Composer `create-project` command to install the boilerplate:
+Use the Composer `create-project` command to install the boilerplate:
 
 ```shell
 composer create-project --prefer-dist locomotivemtl/craft-boilerplate acme
 ```
+
+### Copy environment variables
+
+Copy the `.env.example.dev` file to `.env`:
 
 ## 2. **Setup your local environment**
 
@@ -36,7 +40,7 @@ composer create-project --prefer-dist locomotivemtl/craft-boilerplate acme
 cd acme
 
 # Setup valet to use PHP 8.2 only for this project
-valet isolate 8.2
+valet isolate --site acme 8.2
 
 # Install the dependencies
 valet composer install
@@ -45,7 +49,7 @@ valet composer install
 valet php craft install
 
 # Enable the Vite plugin
-php craft plugin/install vite
+valet php craft plugin/install vite
 ```
 
 ### Using DDEV
@@ -54,7 +58,7 @@ php craft plugin/install vite
 
 ## 3. **Setup Vite**
 
-@todo Quick description of what is Vite and what problems it solves.
+Vite is a fast, modern build tool that speeds up development with instant hot reload and simplifies production bundling using native ES modules.
 
 Add vite configurations to .env file
 
