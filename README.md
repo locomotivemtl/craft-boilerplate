@@ -21,7 +21,7 @@ To start a CraftCMS project with this Boilerplate, simply:
 
 ## 1. **Installing the boilerplate**
 
-You can use the Composer `create-project` command to install the boilerplate:
+Use the Composer `create-project` command to install the boilerplate:
 
 ```shell
 composer create-project --prefer-dist locomotivemtl/craft-boilerplate acme
@@ -29,7 +29,7 @@ composer create-project --prefer-dist locomotivemtl/craft-boilerplate acme
 
 ### Copy environment variables
 
-Copy the `.env.dev.example` file to `.env`:
+Copy the `.env.example.dev` file to `.env`:
 
 ## 2. **Setup your local environment**
 
