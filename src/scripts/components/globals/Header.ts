@@ -1,4 +1,4 @@
-import { ComponentElement } from '@stores/componentManager';
+import { ComponentElement } from '@locomotivemtl/component-manager';
 
 class Header extends HTMLElement {
     constructor() {

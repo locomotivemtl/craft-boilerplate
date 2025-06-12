@@ -17,6 +17,7 @@
         "npm": ">=8.0"
     },
     "dependencies": {
+        "@locomotivemtl/component-manager": "^1.0.1",
         "@locomotivemtl/grid-helper": "^1.0.0",
         "@nanostores/persistent": "^1.0.0",
         "@swup/forms-plugin": "^3.6.0",
@@ -38,11 +39,11 @@
         "postcss-utopia": "^1.1.0",
         "prettier": "^3.5.1",
         "prettier-plugin-tailwindcss": "^0.6.11",
+        "simple-git-hooks": "^2.13.0",
         "tailwindcss": "^4.1.4",
         "vite": "^6.3.5",
         "vite-svg-sprite-wrapper": "^1.4.1",
-        "vite-tsconfig-paths": "^5.1.4",
-        "simple-git-hooks": "^2.13.0"
+        "vite-tsconfig-paths": "^5.1.4"
     },
     "simple-git-hooks": {
         "pre-commit": "npm run format"
