@@ -1,4 +1,4 @@
-import { ComponentElement } from '@stores/componentManager';
+import { ComponentElement } from '@locomotivemtl/component-manager';
 
 export default class Accordion extends HTMLElement {
     static readonly DURATION = 300;
