@@ -5,6 +5,7 @@
 {% set _attr = attr|default({}) %}
 
 {% set _title = title|default("") %}
+{% set _name = name|default("") %}
 
 {# --- Computed --------------------------- #}
 
@@ -12,10 +13,12 @@
 
 {% set _el_attrs = merge({ class: _el_classes }, _attr) %}
 
+{% set _details_attrs = merge({ class: "c-accordion_details" }, _name ? { name: _name } : {}) %}
+
 {# ---------------------------------------- #}
 
 <c-accordion {{ html_attributes(_el_attrs) }}>
-    <details class="c-accordion_details">
+    <details {{ html_attributes(_details_attrs) }}>
         <summary class="c-accordion_summary">
             <span class="c-accordion_label || c-heading -h3">{{ _title }}</span>
             <span class="c-accordion_icon" aria-hidden="true">&darr;</span>
