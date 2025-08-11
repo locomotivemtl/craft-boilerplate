@@ -6,7 +6,7 @@ if (!file_exists($file)) {
     exit(0);
 }
 
-$lines = file($file);
+$lines = file($file, FILE_SKIP_EMPTY_LINES);
 $skip = false;
 $out = [];
 
@@ -25,6 +25,8 @@ foreach ($lines as $line) {
         $out[] = $line;
     }
 }
+
+$out = array_unique($out);
 
 file_put_contents($file, implode('', $out));
 
