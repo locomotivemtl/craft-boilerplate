@@ -1,8 +1,6 @@
 {
     "name": "locomotivemtl/craft-boilerplate",
     "description": "A modern CraftCMS project boilerplate.",
-    "minimum-stability": "dev",
-    "prefer-stable": true,
     "authors": [
         {
             "name": "Locomotive",
@@ -21,6 +19,8 @@
         "source": "https://github.com/locomotivemtl/craft-boilerplate",
         "issues": "https://github.com/locomotivemtl/craft-boilerplate/issues"
     },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
     "require": {
         "php": ">=8.2",
         "craftcms/aws-s3": "^2.2",
@@ -36,15 +36,9 @@
         "craftcms/generator": "^2.0.0",
         "yiisoft/yii2-shell": "^2.0.3"
     },
-    "config": {
-        "allow-plugins": {
-            "craftcms/plugin-installer": true,
-            "yiisoft/yii2-composer": true
-        },
-        "sort-packages": true,
-        "optimize-autoloader": true,
-        "platform": {
-            "php": "8.2"
+    "autoload": {
+        "psr-4": {
+            "locomotive\\": "modules/locomotive/"
         }
     },
     "scripts": {
@@ -53,9 +47,12 @@
             "@php clean-gitignore.php"
         ]
     },
-    "autoload": {
-        "psr-4": {
-            "locomotive\\": "modules/locomotive/"
-        }
+    "config": {
+        "allow-plugins": {
+            "craftcms/plugin-installer": true,
+            "yiisoft/yii2-composer": true
+        },
+        "optimize-autoloader": true,
+        "sort-packages": true
     }
 }
