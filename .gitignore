@@ -1,19 +1,17 @@
-/.env
-/.idea
-/vendor
 .DS_Store
-node_modules
-
-Thumbs.db
 loconfig.*.json
 !loconfig.example.json
-
-/web/uploads/*
-/web/dist/
+Thumbs.db
 vite.config.local.ts
+/.env
+/.idea
+/node_modules
+/vendor
+/web/dist/
+/web/uploads/
 
 # [BOILERPLATE-ONLY]
-config/htmlpurifier/
-config/project/
-config/license*
+/config/htmlpurifier/
+/config/license*
+/config/project/
 # [/BOILERPLATE-ONLY]
