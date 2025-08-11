@@ -1,5 +1,5 @@
 node_modules/**
 vendor/**
-web/uploads/**
-web/dist/**
 web/cpresources/**
+web/dist/**
+web/uploads/**
