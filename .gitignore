@@ -1,14 +1,15 @@
 .DS_Store
+.php-cs-fixer.cache
+.php-cs-fixer.php
 loconfig.*.json
 !loconfig.example.json
 Thumbs.db
 vite.config.local.ts
 /.env
-/.idea
-/.php-cs-fixer.cache
-/.php-cs-fixer.php
-/node_modules
-/vendor
+/.idea/
+/.vscode/
+/node_modules/
+/vendor/
 /web/dist/
 /web/uploads/
 
