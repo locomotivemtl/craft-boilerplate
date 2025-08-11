@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Craft web bootstrap file
  */

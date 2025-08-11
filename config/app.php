@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Yii Application Config
  *
@@ -26,9 +27,9 @@ use locomotive\LocomotiveModule;
 return [
     'id' => App::env('CRAFT_APP_ID') ?: 'CraftCMS',
     'modules' => [
-        '@locomotive' => LocomotiveModule::class
+        '@locomotive' => LocomotiveModule::class,
     ],
     'bootstrap' => [
-        '@locomotive'
+        '@locomotive',
     ],
 ];

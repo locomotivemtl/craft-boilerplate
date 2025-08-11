@@ -20,13 +20,13 @@ class LocomotiveModule extends BaseModule
         parent::init();
         // Any code that creates an element query or loads Twig should be deferred until
         // after Craft is fully initialized, to avoid conflicts with other plugins/modules
-        Craft::$app->onInit(function() {
+        Craft::$app->onInit(function () {
             $this->registerTwigExtension();
         });
     }
 
     private function registerTwigExtension(): void
     {
-        Craft::$app->getView()->registerTwigExtension(new Extension);
+        Craft::$app->getView()->registerTwigExtension(new Extension());
     }
 }

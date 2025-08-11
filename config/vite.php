@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Vite plugin for Craft CMS
  *
@@ -14,12 +15,12 @@ use GuzzleHttp\Exception\GuzzleException;
 
 $devServerPort = App::env('VITE_SERVER_PORT') ?: '5173';
 $devServerPublic = preg_replace('/:\d+$/', '', App::env('VITE_SERVER_URL')) . ':' . $devServerPort;
-$devServerInternal = App::env('VITE_SERVER_URL').':'.$devServerPort;
+$devServerInternal = App::env('VITE_SERVER_URL') . ':' . $devServerPort;
 
 if (App::env('ENVIRONMENT') === 'dev' || App::env('CRAFT_ENVIRONMENT') === 'dev') {
     try {
         $client = new Client(['verify' => false]);
-        $response = $client->get($devServerPublic.'/@vite/client');
+        $response = $client->get($devServerPublic . '/@vite/client');
         $statusCode = $response->getStatusCode();
         $useDevServer = ($statusCode >= 200 && $statusCode < 300);
     } catch (GuzzleException $e) {

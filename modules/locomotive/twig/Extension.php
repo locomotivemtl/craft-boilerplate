@@ -54,28 +54,28 @@ class Extension extends AbstractExtension implements GlobalsInterface
             new TwigFunction(
                 'html_attributes',
                 [ $this, 'composeHtmlAttributes' ],
-                [ 'is_safe' => [ 'html' ] ]
+                [ 'is_safe' => [ 'html' ] ],
             ),
             new TwigFunction(
                 'html_class',
                 [ $this, 'composeHtmlClassAttribute' ],
-                [ 'is_safe' => [ 'html' ] ]
+                [ 'is_safe' => [ 'html' ] ],
             ),
             new TwigFunction(
                 'html_tokens',
-                [ $this, 'mergeTokens' ]
+                [ $this, 'mergeTokens' ],
             ),
             new TwigFunction(
                 'if',
-                [ $this, 'resolveIf' ]
+                [ $this, 'resolveIf' ],
             ),
             new TwigFunction(
                 'merge',
-                'twig_array_merge'
+                'twig_array_merge',
             ),
             new TwigFunction(
                 'srandom',
-                [ $this, 'seededRandom' ]
+                [ $this, 'seededRandom' ],
             ),
         ];
     }
@@ -85,7 +85,7 @@ class Extension extends AbstractExtension implements GlobalsInterface
         return [
             new TwigFilter(
                 'camel2Kebab',
-                [ $this, 'camel2Kebab' ]
+                [ $this, 'camel2Kebab' ],
             ),
         ];
     }
@@ -139,10 +139,10 @@ class Extension extends AbstractExtension implements GlobalsInterface
         return null;
     }
 
-     /**
-     * @param  array|\Traversable ...$arrays Any number of arrays or Traversable objects to merge
-     * @return list<mixed> The merged array.
-     */
+    /**
+    * @param  array|\Traversable ...$arrays Any number of arrays or Traversable objects to merge
+    * @return list<mixed> The merged array.
+    */
     public function mergeTokens(...$arrays): array
     {
         $result = [];
@@ -153,7 +153,7 @@ class Extension extends AbstractExtension implements GlobalsInterface
             } elseif (\is_string($array)) {
                 $array = \explode(' ', $array);
             } else {
-                $array = (array)$array;
+                $array = (array) $array;
             }
 
             $array = array_filter($array, fn($token) => ($token !== null && $token !== ''));
@@ -221,7 +221,7 @@ class Extension extends AbstractExtension implements GlobalsInterface
         $slug = preg_replace(
             '!(?<=[' . $pregDir . '])[' . $pregDelim . ']|[' . $pregDelim . '](?=[' . $pregDir . '])!',
             '',
-            $slug
+            $slug,
         );
 
         // Strip leading and trailing dashes or underscores
@@ -254,11 +254,16 @@ class Extension extends AbstractExtension implements GlobalsInterface
 
     public function camel2Kebab($value): ?string
     {
-        if (!is_scalar($value)) return null;
+        if (!is_scalar($value)) {
+            return null;
+        }
 
-        $value =  (string)$value;
+        $value =  (string) $value;
         return strtolower(preg_replace(
-            '/(?<=\d)(?=[A-Za-z])|(?<=[A-Za-z])(?=\d)|(?<=[a-z])(?=[A-Z])/', '-', $value));
+            '/(?<=\d)(?=[A-Za-z])|(?<=[A-Za-z])(?=\d)|(?<=[a-z])(?=[A-Z])/',
+            '-',
+            $value,
+        ));
     }
 
     /**
@@ -270,7 +275,7 @@ class Extension extends AbstractExtension implements GlobalsInterface
     public function seededRandom(int $seed, array $options): mixed
     {
         srand($seed);
-        return $options[rand(0, count($options) -1 )];
+        return $options[rand(0, count($options) - 1)];
     }
 
     public function toArray(): array
