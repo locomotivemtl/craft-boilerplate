@@ -1,13 +1,15 @@
 {
-    "useTabs": false,
-    "tabWidth": 4,
-    "singleQuote": true,
-    "trailingComma": "none",
-    "semi": true,
+    "plugins": ["@zackad/prettier-plugin-twig", "prettier-plugin-tailwindcss"],
+
+    "bracketSpacing": true,
     "printWidth": 100,
+    "semi": true,
+    "singleQuote": true,
+    "tabWidth": 4,
     "tailwindStylesheet": "./src/styles/main.css",
-    "twigSingleQuote": false,
+    "trailingComma": "all",
     "twigAlwaysBreakObjects": false,
+    "twigSingleQuote": false,
     "twigMultiTags": [
         "nav,endnav",
         "switch,case,default,endswitch",
@@ -15,5 +17,5 @@
         "cache,endcache",
         "tag,endtag"
     ],
-    "plugins": ["@zackad/prettier-plugin-twig", "prettier-plugin-tailwindcss"]
+    "useTabs": false
 }
