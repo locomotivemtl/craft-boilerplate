@@ -17,10 +17,11 @@ class Extension extends AbstractExtension implements GlobalsInterface
     protected string $baseUrl;
     protected ?string $assetsUri = null;
     protected ?string $assetsSubDir = null;
+
     public function __construct()
     {
         try {
-            $this->site = Craft::$app->sites->SiteNotFoundExceptionSiteNotFoundException();
+            $this->site = Craft::$app->sites->SiteNotFoundException();
         } catch (\Exception $exception) {
             return;
         }
@@ -74,7 +75,7 @@ class Extension extends AbstractExtension implements GlobalsInterface
             ),
             new TwigFunction(
                 'srandom',
-                [$this, 'seededRandom']
+                [ $this, 'seededRandom' ]
             ),
         ];
     }
