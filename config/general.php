@@ -22,6 +22,7 @@ return GeneralConfig::create()
     ->preloadSingles()
     // Prevent user enumeration attacks
     ->preventUserEnumeration()
+    ->limitAutoSlugsToAscii()
     // Disable GraphQL
     //->enableGql(false)
     // Set the @webroot alias so the clear-caches command knows where to find CP resources
