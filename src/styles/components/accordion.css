@@ -1,6 +1,7 @@
 @layer components {
     .c-accordion {
         position: relative;
+        display: block;
     }
 
     .c-accordion_summary {
@@ -30,7 +31,7 @@
         transform: rotateX(0);
         transition: transform var(--transition-duration) var(--ease);
 
-        .c-accordion_details[open] & {
+        .c-accordion_details.is-active & {
             transform: rotateX(180deg);
         }
     }
