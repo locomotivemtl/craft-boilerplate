@@ -21,6 +21,7 @@ return GeneralConfig::create()
     ->preloadSingles()
     // Prevent user enumeration attacks
     ->preventUserEnumeration()
+    // Convert non-ASCII to ASCII characters in auto-generated slugs (i.e. ñ → n).
     ->limitAutoSlugsToAscii()
     // Disable GraphQL
     //->enableGql(false)
