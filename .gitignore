@@ -8,6 +8,7 @@ vite.config.local.ts
 /.env
 /.idea/
 /.vscode/
+/config/license*
 /node_modules/
 /vendor/
 /web/dist/
@@ -15,6 +16,5 @@ vite.config.local.ts
 
 # [BOILERPLATE-ONLY]
 /config/htmlpurifier/
-/config/license*
 /config/project/
 # [/BOILERPLATE-ONLY]
