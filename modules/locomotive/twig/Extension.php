@@ -3,6 +3,7 @@
 namespace locomotive\twig;
 
 use Craft;
+use craft\helpers\Html;
 use craft\models\Site;
 use Traversable;
 use Twig\Extension\AbstractExtension;
@@ -52,13 +53,8 @@ class Extension extends AbstractExtension implements GlobalsInterface
     {
         return [
             new TwigFunction(
-                'html_attributes',
-                [ $this, 'composeHtmlAttributes' ],
-                [ 'is_safe' => [ 'html' ] ],
-            ),
-            new TwigFunction(
-                'html_class',
-                [ $this, 'composeHtmlClassAttribute' ],
+                'classAttr',
+                [ $this, 'renderHtmlClassAttribute' ],
                 [ 'is_safe' => [ 'html' ] ],
             ),
             new TwigFunction(
@@ -91,55 +87,6 @@ class Extension extends AbstractExtension implements GlobalsInterface
     }
 
     /**
-     * @param array|object $attributes
-     */
-    public function composeHtmlAttributes($attributes): ?string
-    {
-        $html = \html_build_attributes($attributes);
-        if ($html) {
-            return ' ' . $html;
-        }
-
-        return null;
-    }
-
-    public function composeHtmlClassAttribute(...$classes): ?string
-    {
-        $html = \html_build_attributes([ 'class' => $this->mergeTokens(...$classes) ]);
-        if ($html) {
-            return ' ' . $html;
-        }
-
-        return null;
-    }
-
-    /**
-     * @param array{context: bool}|bool|null $current
-     */
-    public function composeAriaCurrentAttribute($current): ?string
-    {
-        if (isset($current['current'])) {
-            $current = $current['current'];
-        }
-
-        if (is_bool($current)) {
-            $current = $current ? 'true' : 'false';
-        }
-
-        if ($current) {
-            $html = \html_build_attributes([
-                'aria-current' => $current,
-            ]);
-
-            if ($html) {
-                return ' ' . $html;
-            }
-        }
-
-        return null;
-    }
-
-    /**
     * @param  array|\Traversable ...$arrays Any number of arrays or Traversable objects to merge
     * @return list<mixed> The merged array.
     */
@@ -148,20 +95,30 @@ class Extension extends AbstractExtension implements GlobalsInterface
         $result = [];
 
         foreach ($arrays as $array) {
-            if (is_array($array) || $array instanceof Traversable) {
+            if (\is_array($array) || $array instanceof Traversable) {
                 $array = CoreExtension::toArray($array);
             } elseif (\is_string($array)) {
-                $array = \explode(' ', $array);
+                $array = (array) \preg_split('/\s+/', $array, -1, PREG_SPLIT_NO_EMPTY);
             } else {
                 $array = (array) $array;
             }
 
-            $array = array_filter($array, fn($token) => ($token !== null && $token !== ''));
+            $array = \array_filter($array, fn($token): bool => ($token !== null && $token !== ''));
 
-            $result = array_merge($result, $array);
+            $result = \array_merge($result, $array);
         }
 
-        return $result;
+        return \array_values(\array_unique($result));
+    }
+
+    public function renderHtmlClassAttribute(...$classes): ?string
+    {
+        $html = Html::renderTagAttributes([ 'class' => $this->mergeTokens(...$classes) ]);
+        if ($html) {
+            return ' ' . $html;
+        }
+
+        return null;
     }
 
     public function resolveIf($logicalTest, $valueIfTrue, $valueIfFalse = null)

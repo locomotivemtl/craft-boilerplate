@@ -69,7 +69,7 @@
 {% if _src %}
     {% tag _tag with _container_attrs %}
         <div class="c-image_inner">
-            <img {{ html_attributes(_img_attrs) }} />
+            <img {{ attr(_img_attrs) }} />
         </div>
 
         {% if _caption %}
