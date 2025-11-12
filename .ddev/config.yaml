@@ -2,18 +2,13 @@ name: craft-boilerplate
 type: craftcms
 docroot: web
 php_version: '8.3'
-webserver_type: nginx-fpm
-xdebug_enabled: false
-additional_hostnames: []
-additional_fqdns: []
+webserver_type: apache-fpm
 database:
-    type: mysql
-    version: '8.0'
+    type: mariadb
+    version: '10.6'
 use_dns_when_possible: true
 composer_version: '2'
-web_environment: []
-corepack_enable: false
-nodejs_version: '20' # Vite 5 expects Node 18+
+nodejs_version: 'auto'
 web_extra_exposed_ports:
     - name: vite
       container_port: 3000
@@ -27,4 +22,3 @@ web_extra_daemons:
 hooks:
     post-start:
         - composer: install # Keeps installed packages up to date
-        - exec: ./craft up # Apply migrations & project config changes
