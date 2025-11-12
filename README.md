@@ -54,9 +54,30 @@ valet php craft plugin/install vite
 
 ### Using DDEV
 
-> WIP
+```shell
+# Move into your project's directory
+cd acme
+
+# Start DDEV
+ddev start
+
+# Install the dependencies
+ddev composer install
+
+# Run the valet installer.
+ddev craft install
+
+# Enable the Vite plugin
+ddev craft plugin/install vite
+```
 
 ## 3. **Setup Vite**
+
+### Using DDEV
+
+DDEV is already setup to run Vite when the container is started.
+
+### Using Laravel Valet
 
 Vite is a fast, modern build tool that speeds up development with instant hot reload and simplifies production bundling using native ES modules.
 
