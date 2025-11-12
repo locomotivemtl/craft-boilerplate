@@ -39,7 +39,7 @@
     },
     "autoload": {
         "psr-4": {
-            "modules\\": "modules/"
+            "locomotive\\": "modules/locomotive/"
         }
     },
     "scripts": {
