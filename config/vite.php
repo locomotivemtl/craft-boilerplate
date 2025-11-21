@@ -6,8 +6,7 @@ use craft\helpers\App;
 $host = Craft::$app->getRequest()->getIsConsoleRequest()
     ? App::env('PRIMARY_SITE_URL')
     : Craft::$app->getRequest()->getHostInfo();
-
-$port = App::env('VITE_SERVER_HTTPS_PORT') ?: '5173';
+$port = App::env('VITE_SERVER_PUBLIC_PORT') ?: '5173';
 
 return [
     'devServerPublic' => "$host:$port", // Matches https_port in .ddev/config.yaml
