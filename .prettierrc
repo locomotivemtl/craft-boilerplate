@@ -1,28 +1,28 @@
 {
-	"plugins": ["@zackad/prettier-plugin-twig", "prettier-plugin-tailwindcss"],
-	"useTabs": true,
-	"tabWidth": 4,
-	"bracketSpacing": true,
-	"printWidth": 100,
-	"semi": true,
-	"singleQuote": true,
-	"tailwindStylesheet": "./src/styles/main.css",
-	"trailingComma": "all",
-	"twigAlwaysBreakObjects": false,
-	"twigSingleQuote": false,
-	"twigMultiTags": [
-		"nav,endnav",
-		"switch,case,default,endswitch",
-		"ifchildren,endifchildren",
-		"cache,endcache",
-		"tag,endtag"
-	],
-	"overrides": [
-		{
-			"files": ["*.yaml", "*.yml"],
-			"options": {
-				"tabWidth": 2
-			}
-		}
-	]
+    "plugins": ["@zackad/prettier-plugin-twig", "prettier-plugin-tailwindcss"],
+    "useTabs": false,
+    "tabWidth": 4,
+    "bracketSpacing": true,
+    "printWidth": 100,
+    "semi": true,
+    "singleQuote": true,
+    "tailwindStylesheet": "./src/styles/main.css",
+    "trailingComma": "all",
+    "twigAlwaysBreakObjects": false,
+    "twigSingleQuote": false,
+    "twigMultiTags": [
+        "nav,endnav",
+        "switch,case,default,endswitch",
+        "ifchildren,endifchildren",
+        "cache,endcache",
+        "tag,endtag"
+    ],
+    "overrides": [
+        {
+            "files": ["*.yaml", "*.yml"],
+            "options": {
+                "tabWidth": 2
+            }
+        }
+    ]
 }
