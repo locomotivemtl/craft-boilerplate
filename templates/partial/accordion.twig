@@ -5,27 +5,27 @@
 {% set _attr = attr|default({}) %}
 
 {% set _title = title|default("") %}
+{% set _name = name|default("") %}
 
 {# --- Computed --------------------------- #}
 
 {% set _el_classes = html_tokens("c-accordion", _modifiers, _classes) %}
+{% set _el_attrs = merge({ class: _el_classes, animate: "" }, _attr) %}
 
-{% set _el_attrs = merge({ class: _el_classes }, _attr) %}
+{% set _details_attrs = merge({ class: "c-accordion_details", name: _name }, _attr) %}
 
 {# ---------------------------------------- #}
 
-<c-accordion {{ html_attributes(_el_attrs) }}>
-    <details class="c-accordion_details">
+<details-utils {{ html_attributes(_el_attrs) }}>
+    <details {{ html_attributes(_details_attrs) }}>
         <summary class="c-accordion_summary">
             <span class="c-accordion_label || c-heading -h3">{{ _title }}</span>
             <span class="c-accordion_icon" aria-hidden="true">&darr;</span>
         </summary>
-        <div class="c-accordion_content" data-accordion="content">
+        <div class="c-accordion_content">
             {% block default %}
 
             {% endblock %}
         </div>
     </details>
-</c-accordion>
-
-{{ craft.vite.script("src/scripts/components/Accordion.ts") }}
+</details-utils>
