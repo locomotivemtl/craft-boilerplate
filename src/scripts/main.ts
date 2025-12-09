@@ -6,6 +6,7 @@ import '@styles/main.css';
 
 // Always included and initiated classes
 import '@scripts/components/globals/Header';
+import '@zachleat/details-utils';
 
 // Initialize the Transitions class
 const transitions = new Transitions();
@@ -26,8 +27,8 @@ if (import.meta.env.DEV) {
                 gutterWidth: 'var(--grid-gutter)',
                 marginWidth: 'var(--grid-margin)',
                 breakpoints: {
-                    '700': { columns: 12, gutterWidth: 'var(--grid-gutter)' }
-                }
+                    '700': { columns: 12, gutterWidth: 'var(--grid-gutter)' },
+                },
             });
         })
         .catch((error) => {
@@ -38,7 +39,7 @@ if (import.meta.env.DEV) {
 const isSafari = () => {
     document.documentElement.classList.toggle(
         'is-safari',
-        navigator.userAgent.indexOf('Safari') != -1 && navigator.userAgent.indexOf('Version') != -1
+        navigator.userAgent.indexOf('Safari') != -1 && navigator.userAgent.indexOf('Version') != -1,
     );
 };
 isSafari();
