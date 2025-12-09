@@ -17,7 +17,7 @@
 {# ---------------------------------------- #}
 
 {% if _icon %}
-    <span {{ html_attributes(_icon_attrs) }}>
+    <span {{ attr(_icon_attrs) }}>
         {% if _arialabel %}
             <span class="sr-only">{{ _arialabel }}</span>
         {% endif %}
