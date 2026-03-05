@@ -158,67 +158,6 @@ class Extension extends AbstractExtension implements GlobalsInterface
         return $logicalTest ? $valueIfTrue : $valueIfFalse;
     }
 
-    /**
-     * Convert a string into a slug.
-     *
-     * This method strips punctuation to replicate slugs from Charcoal Legacy.
-     *
-     * @param string $str The string to slugify.
-     *
-     * @return string The slugify-ed string.
-     */
-    public function slugify($str): ?string
-    {
-        // Remove punctuation
-        $punctuation = '/[&%\?\!\(\)\[\]\{\}\\\"\':#\.,;]/';
-        $slug = strtolower(preg_replace($punctuation, '', $str));
-
-        $separator = '-';
-        $delimiters = '-_|';
-        $pregDelim = preg_quote($delimiters);
-        $directories = '\\/';
-        $pregDir = preg_quote($directories);
-
-        // Strip HTML
-        $slug = strip_tags($slug);
-
-        // Remove diacritics
-        $slug = htmlentities($slug, ENT_COMPAT, 'UTF-8');
-        $slug = preg_replace('!&([a-zA-Z])(uml|acute|grave|circ|tilde|cedil|ring);!', '$1', $slug);
-
-        // Simplify ligatures
-        $slug = preg_replace('!&([a-zA-Z]{2})(lig);!', '$1', $slug);
-
-        // Remove unescaped HTML characters
-        $unescaped = '!&(raquo|laquo|rsaquo|lsaquo|rdquo|ldquo|rsquo|lsquo|hellip|amp|nbsp|quot|ordf|ordm);!';
-        $slug = preg_replace($unescaped, '', $slug);
-
-        // Unify all dashes/underscores as one separator character
-        $flip = ($separator === '-') ? '_' : '-';
-        $slug = preg_replace('![' . preg_quote($flip) . ']+!u', $separator, $slug);
-
-        // Remove all whitespace and normalize delimiters
-        $slug = preg_replace('![_\|\s|\(\)]+!', $separator, $slug);
-
-        // Squeeze multiple delimiters and whitespace with a single separator
-        $slug = preg_replace('![' . $pregDelim . '\s]{2,}!', $separator, $slug);
-
-        // Squeeze multiple URI path delimiters
-        $slug = preg_replace('![' . $pregDir . ']{2,}!', $separator, $slug);
-
-        // Remove delimiters surrouding URI path delimiters
-        $slug = preg_replace(
-            '!(?<=[' . $pregDir . '])[' . $pregDelim . ']|[' . $pregDelim . '](?=[' . $pregDir . '])!',
-            '',
-            $slug,
-        );
-
-        // Strip leading and trailing dashes or underscores
-        $slug = trim($slug, $delimiters);
-
-        return $slug;
-    }
-
     public function splitByLength($string, $length = 12)
     {
         $words = explode(' ', $string);
