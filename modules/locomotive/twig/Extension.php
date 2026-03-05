@@ -153,6 +153,22 @@ class Extension extends AbstractExtension implements GlobalsInterface
         return $result;
     }
 
+    /**
+     * Resolves conditional values.
+     *
+     * Alternative to Twig's ternary short-hand `{{ result ? 'yes' }}`
+     * that resolves to null instead of an empty string.
+     *
+     * > `{{ result ? 'yes' }}` is the same as `{{ result ? 'yes' : '' }}`
+     *
+     * In some scenarios, `null` is preferred to an empty string
+     * such as in HTML attribute building.
+     *
+     * @param  mixed $logicalTest  The expression to test.
+     * @param  mixed $valueIfTrue  The value to return if $logicalTest is true.
+     * @param  mixed $valueIfFalse Optional. Defaults to null.
+     * @return $logicalTest is true ? $valueIfTrue : $valueIfFalse
+     */
     public function resolveIf($logicalTest, $valueIfTrue, $valueIfFalse = null)
     {
         return $logicalTest ? $valueIfTrue : $valueIfFalse;
