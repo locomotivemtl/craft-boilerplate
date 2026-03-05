@@ -277,11 +277,4 @@ class Extension extends AbstractExtension implements GlobalsInterface
         srand($seed);
         return $options[rand(0, count($options) - 1)];
     }
-
-    public function toArray(): array
-    {
-        return [
-            static::class => $this,
-        ];
-    }
 }
