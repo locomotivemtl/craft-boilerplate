@@ -1,0 +1,24 @@
+name: craft-boilerplate
+type: craftcms
+docroot: web
+php_version: '8.3'
+webserver_type: apache-fpm
+database:
+    type: mariadb
+    version: '10.6'
+use_dns_when_possible: true
+composer_version: '2'
+nodejs_version: 'auto'
+web_extra_exposed_ports:
+    - name: vite
+      container_port: 3000
+      http_port: 3000
+      https_port: 3001
+web_extra_daemons:
+    # Run Vite in a separate process
+    - name: 'vite'
+      command: 'npm install && npm run dev'
+      directory: /var/www/html
+hooks:
+    post-start:
+        - composer: install # Keeps installed packages up to date
