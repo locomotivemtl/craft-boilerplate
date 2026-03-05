@@ -8,7 +8,6 @@ use Traversable;
 use Twig\Extension\AbstractExtension;
 use Twig\Extension\CoreExtension;
 use Twig\Extension\GlobalsInterface;
-use Twig\TwigFilter;
 use Twig\TwigFunction;
 
 class Extension extends AbstractExtension implements GlobalsInterface
@@ -76,16 +75,6 @@ class Extension extends AbstractExtension implements GlobalsInterface
             new TwigFunction(
                 'srandom',
                 [ $this, 'seededRandom' ],
-            ),
-        ];
-    }
-
-    public function getFilters()
-    {
-        return [
-            new TwigFilter(
-                'camel2Kebab',
-                [ $this, 'camel2Kebab' ],
             ),
         ];
     }
@@ -250,20 +239,6 @@ class Extension extends AbstractExtension implements GlobalsInterface
         }
 
         return $result;
-    }
-
-    public function camel2Kebab($value): ?string
-    {
-        if (!is_scalar($value)) {
-            return null;
-        }
-
-        $value =  (string) $value;
-        return strtolower(preg_replace(
-            '/(?<=\d)(?=[A-Za-z])|(?<=[A-Za-z])(?=\d)|(?<=[a-z])(?=[A-Z])/',
-            '-',
-            $value,
-        ));
     }
 
     /**
