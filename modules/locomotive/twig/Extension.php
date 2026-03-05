@@ -158,28 +158,6 @@ class Extension extends AbstractExtension implements GlobalsInterface
         return $logicalTest ? $valueIfTrue : $valueIfFalse;
     }
 
-    public function splitByLength($string, $length = 12)
-    {
-        $words = explode(' ', $string);
-        $result = [];
-        $currentLine = '';
-
-        foreach ($words as $word) {
-            if (strlen($currentLine . ' ' . $word) <= $length) {
-                $currentLine .= ($currentLine === '' ? '' : ' ') . $word;
-            } else {
-                $result[] = $currentLine;
-                $currentLine = $word;
-            }
-        }
-
-        if ($currentLine !== '') {
-            $result[] = $currentLine;
-        }
-
-        return $result;
-    }
-
     /**
      * @param integer $seed
      * @param array $options
