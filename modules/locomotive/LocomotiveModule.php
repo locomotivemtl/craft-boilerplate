@@ -13,11 +13,26 @@ use yii\base\Module as BaseModule;
  */
 class LocomotiveModule extends BaseModule
 {
+    public static LocomotiveModule $services;
+
     public function init(): void
     {
         parent::init();
+
+        // Declare aliases
         Craft::setAlias('@locomotive', __DIR__);
         Craft::setAlias('@modules/locomotive', __DIR__);
+
+        // Prepare declaration of sub-services.
+        self::$services = $this;
+        $this->setComponents([]);
+
+        // Declare the web/console controllers
+        if (Craft::$app->getRequest()->getIsConsoleRequest()) {
+            $this->controllerNamespace = 'modules\\locomotive\\console\\controllers';
+        } else {
+            $this->controllerNamespace = 'modules\\locomotive\\controllers';
+        }
 
         // Any code that creates an element query or loads Twig should be deferred until
         // after Craft is fully initialized, to avoid conflicts with other plugins/modules

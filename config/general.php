@@ -11,7 +11,6 @@
  */
 
 use craft\config\GeneralConfig;
-use craft\helpers\App;
 
 return GeneralConfig::create()
     // Set the default week start day for date pickers (0 = Sunday, 1 = Monday, etc.)

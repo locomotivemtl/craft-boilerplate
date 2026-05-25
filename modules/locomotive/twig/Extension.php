@@ -2,9 +2,7 @@
 
 namespace modules\locomotive\twig;
 
-use Craft;
 use craft\helpers\Html;
-use craft\models\Site;
 use Traversable;
 use Twig\Extension\AbstractExtension;
 use Twig\Extension\CoreExtension;
@@ -13,37 +11,13 @@ use Twig\TwigFunction;
 
 class Extension extends AbstractExtension implements GlobalsInterface
 {
-    protected Site $site;
-    protected string $baseUrl;
-    protected ?string $assetsUri = null;
-    protected ?string $assetsSubDir = null;
-
-    public function __construct()
-    {
-        try {
-            $this->site = Craft::$app->sites->SiteNotFoundException();
-        } catch (\Exception $exception) {
-            return;
-        }
-        $this->baseUrl = rtrim($this->standardizeProtocol($this->site->baseUrl), '/');
-        $this->assetsUri = $this->baseUrl . '/dist/';
-    }
-
     public function getGlobals(): array
     {
-        return [
-            'assetsUri'   => $this->assetsUri,
-        ];
+        return [];
     }
 
-    private function standardizeProtocol(?string $baseUrl): string
-    {
-        if (filter_var($baseUrl, FILTER_VALIDATE_URL) === false) {
-            return $baseUrl;
-        }
-
-        return preg_replace('/^https?:\/\//', '//', $baseUrl, 1);
-    }
+    // Functions
+    // ============================================================
 
     /**
      * @return list<TwigFunction>
@@ -69,16 +43,61 @@ class Extension extends AbstractExtension implements GlobalsInterface
                 'twig_array_merge',
             ),
             new TwigFunction(
-                'srandom',
+                'seeded_random',
                 [ $this, 'seededRandom' ],
             ),
         ];
     }
 
     /**
-    * @param  array|\Traversable ...$arrays Any number of arrays or Traversable objects to merge
-    * @return list<mixed> The merged array.
-    */
+     * @param array|object $attributes
+     */
+    public function composeHtmlAttributes($attributes): ?string
+    {
+        $html = \html_build_attributes($attributes);
+        if ($html) {
+            return ' ' . $html;
+        }
+
+        return null;
+    }
+
+    public function composeHtmlClassAttribute(...$classes): ?string
+    {
+        $html = \html_build_attributes([ 'class' => $this->mergeTokens(...$classes) ]);
+        if ($html) {
+            return ' ' . $html;
+        }
+
+        return null;
+    }
+
+
+    /**
+     * Resolves conditional values.
+     *
+     * Alternative to Twig's ternary short-hand `{{ result ? 'yes' }}`
+     * that resolves to null instead of an empty string.
+     *
+     * > `{{ result ? 'yes' }}` is the same as `{{ result ? 'yes' : '' }}`
+     *
+     * In some scenarios, `null` is preferred to an empty string
+     * such as in HTML attribute building.
+     *
+     * @param  mixed $logicalTest  The expression to test.
+     * @param  mixed $valueIfTrue  The value to return if $logicalTest is true.
+     * @param  mixed $valueIfFalse Optional. Defaults to null.
+     * @return $logicalTest is true ? $valueIfTrue : $valueIfFalse
+     */
+    public function resolveIf($logicalTest, $valueIfTrue, $valueIfFalse = null)
+    {
+        return $logicalTest ? $valueIfTrue : $valueIfFalse;
+    }
+
+    /**
+     * @param  array|\Traversable ...$arrays Any number of arrays or Traversable objects to merge
+     * @return list<mixed> The merged array.
+     */
     public function mergeTokens(...$arrays): array
     {
         $result = [];
@@ -110,36 +129,55 @@ class Extension extends AbstractExtension implements GlobalsInterface
         return null;
     }
 
-    /**
-     * Resolves conditional values.
-     *
-     * Alternative to Twig's ternary short-hand `{{ result ? 'yes' }}`
-     * that resolves to null instead of an empty string.
-     *
-     * > `{{ result ? 'yes' }}` is the same as `{{ result ? 'yes' : '' }}`
-     *
-     * In some scenarios, `null` is preferred to an empty string
-     * such as in HTML attribute building.
-     *
-     * @param  mixed $logicalTest  The expression to test.
-     * @param  mixed $valueIfTrue  The value to return if $logicalTest is true.
-     * @param  mixed $valueIfFalse Optional. Defaults to null.
-     * @return $logicalTest is true ? $valueIfTrue : $valueIfFalse
-     */
-    public function resolveIf($logicalTest, $valueIfTrue, $valueIfFalse = null)
-    {
-        return $logicalTest ? $valueIfTrue : $valueIfFalse;
-    }
 
     /**
      * @param integer $seed
-     * @param array $options
+     * @param array|float $options Number or list of items to randomly select.
      *
      * @return mixed
      */
-    public function seededRandom(int $seed, array $options): mixed
+    public function seededRandom(int $seed, array|int $options = 1): mixed
     {
         srand($seed);
-        return $options[rand(0, count($options) - 1)];
+
+        if (is_array($options)) {
+            return $options[rand(0, count($options) - 1)];
+        }
+
+        return rand(0, $options);
+    }
+
+    public function toArray(): array
+    {
+        return [
+            static::class => $this,
+        ];
+    }
+
+    // Filters
+    // ============================================================
+
+    public function getFilters()
+    {
+        return [
+            new TwigFilter(
+                'camel2Kebab',
+                [ $this, 'camel2Kebab' ],
+            ),
+        ];
+    }
+
+    public function camel2Kebab($value): ?string
+    {
+        if (!is_scalar($value)) {
+            return null;
+        }
+
+        $value =  (string) $value;
+        return strtolower(preg_replace(
+            '/(?<=\d)(?=[A-Za-z])|(?<=[A-Za-z])(?=\d)|(?<=[a-z])(?=[A-Z])/',
+            '-',
+            $value,
+        ));
     }
 }
