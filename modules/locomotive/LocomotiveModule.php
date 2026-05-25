@@ -1,9 +1,9 @@
 <?php
 
-namespace locomotive;
+namespace modules\locomotive;
 
 use Craft;
-use locomotive\twig\Extension;
+use modules\locomotive\twig\Extension;
 use yii\base\Module as BaseModule;
 
 /**
@@ -15,9 +15,10 @@ class LocomotiveModule extends BaseModule
 {
     public function init(): void
     {
-        Craft::setAlias('@locomotive', __DIR__);
-
         parent::init();
+        Craft::setAlias('@locomotive', __DIR__);
+        Craft::setAlias('@modules/locomotive', __DIR__);
+
         // Any code that creates an element query or loads Twig should be deferred until
         // after Craft is fully initialized, to avoid conflicts with other plugins/modules
         Craft::$app->onInit(function () {

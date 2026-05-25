@@ -1,6 +1,6 @@
 <?php
 
-namespace locomotive\twig;
+namespace modules\locomotive\twig;
 
 use Craft;
 use craft\helpers\Html;
