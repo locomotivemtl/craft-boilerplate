@@ -2,12 +2,13 @@
 
 namespace modules\locomotive\twig;
 
-use craft\helpers\Html;
 use Craft;
+use craft\helpers\Html;
 use Traversable;
 use Twig\Extension\AbstractExtension;
 use Twig\Extension\CoreExtension;
 use Twig\Extension\GlobalsInterface;
+use Twig\TwigFilter;
 use Twig\TwigFunction;
 
 class Extension extends AbstractExtension implements GlobalsInterface
