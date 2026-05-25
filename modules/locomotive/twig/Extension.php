@@ -3,6 +3,7 @@
 namespace modules\locomotive\twig;
 
 use craft\helpers\Html;
+use Craft;
 use Traversable;
 use Twig\Extension\AbstractExtension;
 use Twig\Extension\CoreExtension;
@@ -45,6 +46,10 @@ class Extension extends AbstractExtension implements GlobalsInterface
             new TwigFunction(
                 'seeded_random',
                 [ $this, 'seededRandom' ],
+            ),
+            new TwigFunction(
+                'is_external_url',
+                [ $this, 'isExternalUrl' ],
             ),
         ];
     }
@@ -129,6 +134,24 @@ class Extension extends AbstractExtension implements GlobalsInterface
         return null;
     }
 
+    /**
+     * @param string $url
+     *
+     * @return boolean
+     */
+    public function isExternalUrl(string $url): bool
+    {
+        if (filter_var($url, FILTER_VALIDATE_URL)) {
+            return false;
+        }
+
+        $urlHost = parse_url($url, PHP_URL_HOST);
+        $urlHost = preg_replace('/^www\./i', '', $urlHost);
+        $siteHost = parse_url(Craft::$app->request->getAbsoluteUrl(), PHP_URL_HOST);
+        $siteHost = preg_replace('/^www\./i', '', $siteHost);
+
+        return ($urlHost && $siteHost !== $urlHost);
+    }
 
     /**
      * @param integer $seed

@@ -1,85 +1,78 @@
-{#
-    Image snippet
-    =======================================
+{% types {
+    image?: "object",
+    src?: "string",
+    alt?: "string",
+    width?: "number",
+    height?: "number",
+    caption?: "string",
+    transform?: "mixed",
+    is_figure?: "boolean",
+    is_lazy_load?: "boolean",
+    attr?: "?iterable<string, mixed>",
+    classes?: "?string",
+    modifiers?: "?string",
+    inner_classes?: "?string",
+    img_classes?: "?string"
+} %}
 
-    The `img` parameter was made to receive formatted data from a CMS.
-    The use case would be to output an image without overriding is dimensions
-    or other properties.
-
-    It needs to be an object with the following keys:
-
-    - src: string
-    - width: int
-    - height: int
-    - alt?: string
-    - caption?: string
-
-    ```twig
-    {% include 'image' with {
-        img: project.featured_image
-    } %}
-    ```
-
-    ```twig
-    {% include 'image' with project.featured_image %}
-    ```
-#}
-
-{# --- Parameters ------------------------- #}
+{# Transform image #}
+{% if image is defined and transform is defined and transform %}
+    {% set image = image.transform(transform) %}
+{% endif %}
 
 {# Defaults #}
-{% set _img = img|default({}) %}
+{% set image = image|default({}) %}
+{% set src = src|default(image.src|default(null)) %}
+{% set alt = alt|default(image.alt|default(null)) %}
+{% set width = width|default(image.width|default(null)) %}
+{% set height = height|default(image.height|default(null)) %}
+{% set caption = caption|default(image.caption|default(null)) %}
+{% set is_svg = image.isSVG ?? false %}
+{% set transform = transform|default(null) %}
+{% set is_figure = is_figure ?? false %}
+{% set is_lazy_load = is_lazy_load ?? not is_svg %}
+{% set attr = attr|default({}) %}
+{% set classes = classes|default(null) %}
+{% set modifiers = modifiers|default(null) %}
+{% set inner_classes = inner_classes|default(null) %}
+{% set img_classes = img_classes|default(null) %}
 
-{% set _width = width|default(_img.width|default(1)) %}
-{% set _height = height|default(_img.height|default(1)) %}
-{% set _src = src|default(_img.src|default(null)) %}
-{% set _alt = alt|default(_img.alt|default(null)) %}
-{% set _caption = caption|default(_img.caption|default(null)) %}
-{% set _attr = attr|default({}) %}
-
-{# Misc. #}
-{% set _is_figure = is_figure ?? false %}
-{% set _is_lazy_load = is_lazy_load ?? true %}
-
-{# Classes & modifiers #}
-{% set _classes = classes|default(null) %}
-{% set _modifiers = modifiers|default(null) %}
-
-{# --- Computed --------------------------- #}
-{% set _tag = _is_figure ? "figure" : "div" %}
-
-{% set _container_classes =
-    html_tokens("c-image", _classes, _modifiers, if(_is_lazy_load, "-lazy-load"))
+{# Computed #}
+{% set tag = is_figure ? "figure" : "div" %}
+{% set container_classes =
+    html_tokens("c-image", classes, modifiers, if(is_lazy_load, "-lazy-load"))
 %}
+{% set container_attrs = merge({ class: container_classes }, attr) %}
+{% set inner_classes_computed = html_tokens("c-image_inner", inner_classes)|join(" ") %}
+{% set img_classes_computed = html_tokens("c-image_img", img_classes)|join(" ") %}
 
-{% set _container_attrs = merge({ class: _container_classes }, _attr) %}
-
-{% set _img_attrs = {
-    class: "c-image_img",
-    alt: _alt ?? "",
-    width: _width,
-    height: _height,
-    src: _src,
-    loading: _is_lazy_load ? "lazy" : "eager",
-    onload: _is_lazy_load
+{% set img_attrs = {
+    class: img_classes_computed,
+    src: src,
+    alt: alt,
+    width: width,
+    height: height,
+    loading: is_lazy_load ? "lazy" : "eager",
+    onload: is_lazy_load
         ? "this.classList.add('is-loaded'); this.parentNode.parentNode.classList.add('is-loaded');"
         : ""
 } %}
 
-{% if _src %}
-    {% tag _tag with _container_attrs %}
-        <div class="c-image_inner">
-            <img {{ attr(_img_attrs) }} />
+{# ---------------------------------------- #}
+{% if src %}
+    {% tag tag with container_attrs %}
+        <div class="{{ inner_classes_computed }}">
+            <img {{ attr(img_attrs) }} />
         </div>
 
-        {% if _caption %}
-            {% if _is_figure %}
+        {% if caption %}
+            {% if is_figure %}
                 <figcaption class="c-image_description">
-                    {{- _caption|raw -}}
+                    {{- caption|raw -}}
                 </figcaption>
             {% else %}
                 <div class="c-image_description">
-                    <span>{{ _caption|raw }}</span>
+                    <span>{{ caption|raw }}</span>
                 </div>
             {% endif %}
         {% endif %}

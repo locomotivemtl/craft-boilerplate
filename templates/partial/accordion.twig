@@ -1,23 +1,25 @@
-{# --- Parameters ------------------------- #}
+{% types {
+    title?: "string",
+    classes?: "string",
+    modifiers?: "string",
+    attr?: "iterable<string, mixed>"
+} %}
 
-{% set _classes = classes|default(null) %}
-{% set _modifiers = modifiers|default("") %}
-{% set _attr = attr|default({}) %}
+{# Defaults #}
+{% set title = title|default("") %}
+{% set classes = classes|default(null) %}
+{% set modifiers = modifiers|default("") %}
+{% set attr = attr|default({}) %}
 
-{% set _title = title|default("") %}
-
-{# --- Computed --------------------------- #}
-
-{% set _el_classes = html_tokens("c-accordion", _modifiers, _classes) %}
-
-{% set _el_attrs = merge({ class: _el_classes }, _attr) %}
+{# Computed #}
+{% set element_classes = html_tokens("c-accordion", modifiers, classes) %}
+{% set element_attrs = merge({ class: element_classes }, attr) %}
 
 {# ---------------------------------------- #}
-
-<c-accordion {{ attr(_el_attrs) }}>
+<c-accordion {{ attr(element_attrs) }}>
     <details class="c-accordion_details">
         <summary class="c-accordion_summary">
-            <span class="c-accordion_label || c-heading -h3">{{ _title }}</span>
+            <span class="c-accordion_label || c-heading -h3">{{ title }}</span>
             <span class="c-accordion_icon" aria-hidden="true">&darr;</span>
         </summary>
         <div class="c-accordion_content" data-accordion="content">
