@@ -10,6 +10,10 @@
  * @link https://craftcms.com/docs/5.x/system/routing.html
  */
 
+use craft\helpers\App;
+
 return [
-    'design-system' => ['template' => 'design-system'],
+    'design-system' => !(App::parseBooleanEnv(App::env('CRAFT_HIDE_DESIGN_SYSTEM')) ?? false)
+        ? ['template' => 'design-system']
+        : false,
 ];
