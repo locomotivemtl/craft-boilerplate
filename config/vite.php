@@ -26,7 +26,7 @@ if (!$host) {
         $response = $client->get($devServerPublic . '/@vite/client');
         $statusCode = $response->getStatusCode();
         $devServerIsRunning = ($statusCode >= 200 && $statusCode < 300);
-    } catch (GuzzleException $e) {
+    } catch (GuzzleException) {
         $devServerIsRunning = false;
     }
 }
