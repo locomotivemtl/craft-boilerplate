@@ -22,7 +22,7 @@
  */
 
 use craft\helpers\App;
-use locomotive\LocomotiveModule;
+use modules\locomotive\LocomotiveModule;
 
 return [
     'id' => App::env('CRAFT_APP_ID') ?: 'CraftCMS',

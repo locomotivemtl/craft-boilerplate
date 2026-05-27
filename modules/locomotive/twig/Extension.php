@@ -1,10 +1,9 @@
 <?php
 
-namespace locomotive\twig;
+namespace modules\locomotive\twig;
 
 use Craft;
 use craft\helpers\Html;
-use craft\models\Site;
 use Traversable;
 use Twig\Extension\AbstractExtension;
 use Twig\Extension\CoreExtension;
@@ -13,37 +12,13 @@ use Twig\TwigFunction;
 
 class Extension extends AbstractExtension implements GlobalsInterface
 {
-    protected Site $site;
-    protected string $baseUrl;
-    protected ?string $assetsUri = null;
-    protected ?string $assetsSubDir = null;
-
-    public function __construct()
-    {
-        try {
-            $this->site = Craft::$app->sites->SiteNotFoundException();
-        } catch (\Exception $exception) {
-            return;
-        }
-        $this->baseUrl = rtrim($this->standardizeProtocol($this->site->baseUrl), '/');
-        $this->assetsUri = $this->baseUrl . '/dist/';
-    }
-
     public function getGlobals(): array
     {
-        return [
-            'assetsUri'   => $this->assetsUri,
-        ];
+        return [];
     }
 
-    private function standardizeProtocol(?string $baseUrl): string
-    {
-        if (filter_var($baseUrl, FILTER_VALIDATE_URL) === false) {
-            return $baseUrl;
-        }
-
-        return preg_replace('/^https?:\/\//', '//', $baseUrl, 1);
-    }
+    // Functions
+    // ============================================================
 
     /**
      * @return list<TwigFunction>
@@ -69,35 +44,14 @@ class Extension extends AbstractExtension implements GlobalsInterface
                 'twig_array_merge',
             ),
             new TwigFunction(
-                'srandom',
+                'seeded_random',
                 [ $this, 'seededRandom' ],
             ),
+            new TwigFunction(
+                'is_external_url',
+                [ $this, 'isExternalUrl' ],
+            ),
         ];
-    }
-
-    /**
-    * @param  array|\Traversable ...$arrays Any number of arrays or Traversable objects to merge
-    * @return list<mixed> The merged array.
-    */
-    public function mergeTokens(...$arrays): array
-    {
-        $result = [];
-
-        foreach ($arrays as $array) {
-            if (\is_array($array) || $array instanceof Traversable) {
-                $array = CoreExtension::toArray($array);
-            } elseif (\is_string($array)) {
-                $array = (array) \preg_split('/\s+/', $array, -1, PREG_SPLIT_NO_EMPTY);
-            } else {
-                $array = (array) $array;
-            }
-
-            $array = \array_filter($array, fn($token): bool => ($token !== null && $token !== ''));
-
-            $result = \array_merge($result, $array);
-        }
-
-        return \array_values(\array_unique($result));
     }
 
     public function renderHtmlClassAttribute(...$classes): ?string
@@ -132,14 +86,71 @@ class Extension extends AbstractExtension implements GlobalsInterface
     }
 
     /**
+     * @param  array|\Traversable ...$arrays Any number of arrays or Traversable objects to merge
+     * @return list<mixed> The merged array.
+     */
+    public function mergeTokens(...$arrays): array
+    {
+        $result = [];
+
+        foreach ($arrays as $array) {
+            if (\is_array($array) || $array instanceof Traversable) {
+                $array = CoreExtension::toArray($array);
+            } elseif (\is_string($array)) {
+                $array = (array) \preg_split('/\s+/', $array, -1, PREG_SPLIT_NO_EMPTY);
+            } else {
+                $array = (array) $array;
+            }
+
+            $array = \array_filter($array, fn($token): bool => ($token !== null && $token !== ''));
+
+            $result = \array_merge($result, $array);
+        }
+
+        return \array_values(\array_unique($result));
+    }
+
+    /**
      * @param integer $seed
-     * @param array $options
+     * @param array|float $options Number or list of items to randomly select.
      *
      * @return mixed
      */
-    public function seededRandom(int $seed, array $options): mixed
+    public function seededRandom(int $seed, array|int $options = 1): mixed
     {
         srand($seed);
-        return $options[rand(0, count($options) - 1)];
+
+        if (is_array($options)) {
+            return $options[rand(0, count($options) - 1)];
+        }
+
+        return rand(0, $options);
+    }
+
+    /**
+     * @param string $url
+     *
+     * @return boolean
+     */
+    public function isExternalUrl(string $url): bool
+    {
+        if (filter_var($url, FILTER_VALIDATE_URL)) {
+            return false;
+        }
+
+        $urlHost = parse_url($url, PHP_URL_HOST);
+        $urlHost = preg_replace('/^www\./i', '', $urlHost);
+        $siteHost = parse_url(Craft::$app->request->getAbsoluteUrl(), PHP_URL_HOST);
+        $siteHost = preg_replace('/^www\./i', '', $siteHost);
+
+        return ($urlHost && $siteHost !== $urlHost);
+    }
+
+    // Filters
+    // ============================================================
+
+    public function getFilters(): array
+    {
+        return [];
     }
 }

@@ -32,7 +32,7 @@
         "@tailwindcss/nesting": "^0.0.0-insiders.565cd3e",
         "@tailwindcss/vite": "^4.1.4",
         "@types/node": "^22.15.18",
-        "@zackad/prettier-plugin-twig": "^0.16.0",
+        "@zackad/prettier-plugin-twig": "^0.17.0",
         "autoprefixer": "^10.4.20",
         "dotenv": "^16.5.0",
         "glob": "^11.0.0",

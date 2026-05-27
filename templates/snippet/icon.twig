@@ -1,28 +1,29 @@
-{# --- Parameters ------------------------- #}
+{% types {
+    icon: "string",
+    aria_label?: "?string",
+    classes?: "?string",
+    modifiers?: "?string",
+    attr?: "?iterable<string, mixed>"
+} %}
 
-{% set _icon = icon %}
-{% set _classes = classes|default(null) %}
-{% set _modifiers = modifiers|default(null) %}
-{% set _arialabel = ariaLabel|default("") %}
-{% set _attr = attr|default({}) %}
+{# --- Defaults ------------------------- #}
+{% set aria_label = aria_label|default("") %}
+{% set classes = classes|default(null) %}
+{% set modifiers = modifiers|default("") %}
+{% set attr = attr|default({}) %}
 
 {# --- Computed --------------------------- #}
-
-{% set _icon_classes = html_tokens("c-icon", _modifiers, _classes) %}
-
-{% set _icon_attrs = merge({ class: _icon_classes }, _attr) %}
-
-{% set svg_classes = "svg-" ~ _icon %}
+{% set icon_classes = html_tokens("c-icon", modifiers, classes) %}
+{% set icon_attrs = merge({ class: icon_classes }, attr) %}
+{% set svg_classes = "svg-" ~ icon %}
 
 {# ---------------------------------------- #}
+<span {{ attr(icon_attrs) }}>
+    {% if aria_label %}
+        <span class="sr-only">{{ aria_label }}</span>
+    {% endif %}
 
-{% if _icon %}
-    <span {{ attr(_icon_attrs) }}>
-        {% if _arialabel %}
-            <span class="sr-only">{{ _arialabel }}</span>
-        {% endif %}
-        <svg class="{{ svg_classes }}" focusable="false" aria-hidden="true">
-            <use xlink:href="/dist/sprite.svg?v={{ "now"|date("U") }}#{{ _icon }}"></use>
-        </svg>
-    </span>
-{% endif %}
+    <svg class="{{ svg_classes }}" focusable="false" aria-hidden="true">
+        <use xlink:href="/dist/sprite.svg?v={{ "now"|date("U") }}#{{ icon }}"></use>
+    </svg>
+</span>

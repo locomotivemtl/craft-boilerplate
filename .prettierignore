@@ -1,5 +1,7 @@
 node_modules/**
 vendor/**
+config/project/**
+storage/
 web/cpresources/**
 web/dist/**
 web/uploads/**

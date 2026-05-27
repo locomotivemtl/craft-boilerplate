@@ -1,51 +1,77 @@
-{% set _tag = tag|default("button") %}
-{% set _href = href|default(null) %}
-{% set _external = external ?? false %}
-{% set _classes = classes|default(null) %}
-{% set _modifiers = modifiers|default(null) %}
-{% set _label = label|default(null) %}
-{% set _icon = icon|default(null) %}
-{% set _attr = attr|default({}) %}
+{% types {
+    link?: "object",
+    href?: "string",
+    label?: "string",
+    icon?: "string",
+    target?: "?string",
+    external?: "boolean",
+    animated?: "boolean",
+    classes?: "string",
+    modifiers?: "string",
+    attr?: "iterable<string, mixed>",
+    label_attr?: "iterable<string, mixed>",
+    icon_attr?: "iterable<string, mixed>"
+} %}
+
+{# Defaults #}
+{% set link = link|default({}) %}
+{% set href = href|default(link.href|default(null)) %}
+{% set label = label|default(link.label|default(null)) %}
+{% set icon = icon|default(link.icon|default(null)) %}
+{% set target = target|default(link.target|default(null)) %}
+{% set external = external ?? is_external_url(href) %}
+{% set animated = animated ?? true %}
+{% set classes = classes|default(null) %}
+{% set modifiers = modifiers|default(null) %}
+{% set attr = attr|default({}) %}
+{% set label_attr = label_attr|default({}) %}
+{% set icon_attr = icon_attr|default({}) %}
 
 {# --- Computed --------------------------- #}
-
-{% if _href != null %}
-    {% set _tag = "a" %}
-{% elseif _tag == "a" %}
-    {% set _tag = "span" %}
-{% endif %}
-
-{% set _is_anchor = _tag == "a" %}
-
-{% set _button_classes = html_tokens("c-button", _modifiers, _classes) %}
-
-{% set _button_attrs =
+{% set tag = href ? "a" : "span" %}
+{% set is_anchor = tag == "a" %}
+{% set button_classes = html_tokens("c-button", modifiers, classes) %}
+{% set button_attrs =
     merge(
         {
-            class: _button_classes,
-            href: if(_is_anchor, _href),
-            target: target is defined ? target : if(_is_anchor and _external, "_blank"),
-            rel: if(_is_anchor and _external, "noopener noreferrer"),
-            "data-load": if(_is_anchor and _external, "false")
+            class: button_classes,
+            href: if(is_anchor, href),
+            target: target is defined ? target : if(is_anchor and external, "_blank"),
+            rel: if(is_anchor and external, "noopener noreferrer"),
+            "data-load": if(is_anchor and external, "false")
         },
-        _attr
+        attr
     )
 %}
 
 {# ---------------------------------------- #}
 
-{% tag _tag with _button_attrs %}
-    <span class="c-button_label">{{ _label|raw }}</span>
-
-    {% if _icon %}
-        {% if (_icon|length) > 1 %}
-            {% include "snippet/icon" with {
-                classes: "c-button_icon",
-                icon: _icon,
-                attr: { "aria-hidden": "true" }
-            } only %}
-        {% else %}
-            <span class="c-button_icon" aria-hidden="true">{{ _icon }}</span>
+{% tag tag with button_attrs %}
+    <div class="c-button_inner">
+        {% if icon and animated %}
+            {% if (icon|length) > 1 %}
+                {% include "snippet/icon" with {
+                    icon,
+                    classes: "c-button_icon",
+                    attr: merge({ "aria-hidden": "true" }, icon_attr)
+                } only %}
+            {% else %}
+                <span class="c-button_icon" aria-hidden="true">{{ icon }}</span>
+            {% endif %}
         {% endif %}
-    {% endif %}
+
+        <span class="c-button_label" {{ attr(label_attr) }}>{{ label|raw }}</span>
+
+        {% if icon %}
+            {% if (icon|length) > 1 %}
+                {% include "snippet/icon" with {
+                    icon,
+                    classes: "c-button_icon",
+                    attr: merge({ "aria-hidden": "true" }, icon_attr)
+                } only %}
+            {% else %}
+                <span class="c-button_icon" aria-hidden="true">{{ icon }}</span>
+            {% endif %}
+        {% endif %}
+    </div>
 {% endtag %}

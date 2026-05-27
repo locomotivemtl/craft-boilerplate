@@ -14,8 +14,8 @@ dotenv.config();
 const inputFiles = globSync(
     ['src/scripts/main.ts', 'src/scripts/components/**/*.ts', 'src/styles/main.css'],
     {
-        ignore: ['src/scripts/components/Example.ts', 'src/scripts/components/globals/**/*.ts']
-    }
+        ignore: ['src/scripts/components/Example.ts', 'src/scripts/components/globals/**/*.ts'],
+    },
 ).map((file) => {
     return file;
 });
@@ -48,14 +48,14 @@ export default {
                         }
                     }
                     return '[name]-[hash][extname]'; // default for others
-                }
-            }
-        }
+                },
+            },
+        },
     },
     css: {
         postcss: {
-            plugins: [autoprefixer, postcssUtopia(), postcssHelpersFunctions()]
-        }
+            plugins: [autoprefixer, postcssUtopia(), postcssHelpersFunctions()],
+        },
     },
     plugins: [
         tailwindcss(),
@@ -70,14 +70,14 @@ export default {
                             svgo: {
                                 pluggins: [
                                     {
-                                        removeAttrs: { attrs: '(fill)' }
-                                    }
-                                ]
-                            }
-                        }
-                    ]
-                }
-            }
+                                        removeAttrs: { attrs: '(fill)' },
+                                    },
+                                ],
+                            },
+                        },
+                    ],
+                },
+            },
         }),
         {
             name: 'php/twig',
@@ -85,13 +85,13 @@ export default {
                 if (file.endsWith('.twig') || file.endsWith('.php')) {
                     server.ws.send({ type: 'full-reload', path: '*' });
                 }
-            }
-        }
+            },
+        },
     ],
     server: {
         cors: [defaultAllowedOrigins],
-        port: process.env.VITE_SERVER_PORT
+        port: process.env.VITE_SERVER_PORT,
     },
+    ...localConfig,
     ...ddevConfig,
-    ...localConfig
 } as UserConfig;
