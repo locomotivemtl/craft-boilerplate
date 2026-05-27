@@ -2,8 +2,8 @@ import { $scroll } from '@stores/scroll';
 import { isAnimationsReduced } from '@scripts/stores/animations';
 
 import LocomotiveScroll, {
+    type ILenisScrollToOptions,
     type lenisTargetScrollTo,
-    type ILenisScrollToOptions
 } from 'locomotive-scroll';
 
 export class Scroll {
@@ -33,7 +33,7 @@ export class Scroll {
     static initScroll() {
         this.locomotiveScroll = new LocomotiveScroll({
             lenisOptions: {
-                smoothWheel: this.isSmooth
+                smoothWheel: this.isSmooth,
             },
             scrollCallback({ scroll, limit, velocity, direction, progress }) {
                 $scroll.set({
@@ -41,28 +41,10 @@ export class Scroll {
                     limit,
                     velocity,
                     direction,
-                    progress
+                    progress,
                 });
-            }
+            },
         });
-
-        // Prevent scroll on CookieYes modal
-        this.locomotiveScroll?.lenisInstance?.options?.content?.addEventListener(
-            'wheel',
-            (event: Event) => {
-                const targets = event.composedPath();
-                const stopPropagation = targets.some((target) => {
-                    const el = target as HTMLElement;
-                    return (
-                        el.classList?.contains('cky-modal') ||
-                        el.classList?.contains('cky-consent-container')
-                    );
-                });
-                if (stopPropagation) {
-                    event.stopPropagation();
-                }
-            }
-        );
 
         this.isInitialized = true;
     }

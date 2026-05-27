@@ -116,6 +116,10 @@ Visit your project locally http://acme.test
 
 # Development
 
+## Tips
+
+A couple of tips have been documented here in `docs/development-tips.md`. Take a look at them before you begin!
+
 ## Development dependencies
 
 - [`Node v20.14`](https://nodejs.org/en/blog/release/v20.14.0https://nodejs.org/en/blog/release/v20.14.0)
