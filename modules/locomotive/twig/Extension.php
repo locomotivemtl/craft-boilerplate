@@ -8,7 +8,6 @@ use Traversable;
 use Twig\Extension\AbstractExtension;
 use Twig\Extension\CoreExtension;
 use Twig\Extension\GlobalsInterface;
-use Twig\TwigFilter;
 use Twig\TwigFunction;
 
 class Extension extends AbstractExtension implements GlobalsInterface
@@ -55,29 +54,15 @@ class Extension extends AbstractExtension implements GlobalsInterface
         ];
     }
 
-    /**
-     * @param array|object $attributes
-     */
-    public function composeHtmlAttributes($attributes): ?string
+    public function renderHtmlClassAttribute(...$classes): ?string
     {
-        $html = \html_build_attributes($attributes);
+        $html = Html::renderTagAttributes([ 'class' => $this->mergeTokens(...$classes) ]);
         if ($html) {
             return ' ' . $html;
         }
 
         return null;
     }
-
-    public function composeHtmlClassAttribute(...$classes): ?string
-    {
-        $html = \html_build_attributes([ 'class' => $this->mergeTokens(...$classes) ]);
-        if ($html) {
-            return ' ' . $html;
-        }
-
-        return null;
-    }
-
 
     /**
      * Resolves conditional values.
@@ -125,14 +110,21 @@ class Extension extends AbstractExtension implements GlobalsInterface
         return \array_values(\array_unique($result));
     }
 
-    public function renderHtmlClassAttribute(...$classes): ?string
+    /**
+     * @param integer $seed
+     * @param array|float $options Number or list of items to randomly select.
+     *
+     * @return mixed
+     */
+    public function seededRandom(int $seed, array|int $options = 1): mixed
     {
-        $html = Html::renderTagAttributes([ 'class' => $this->mergeTokens(...$classes) ]);
-        if ($html) {
-            return ' ' . $html;
+        srand($seed);
+
+        if (is_array($options)) {
+            return $options[rand(0, count($options) - 1)];
         }
 
-        return null;
+        return rand(0, $options);
     }
 
     /**
@@ -154,54 +146,11 @@ class Extension extends AbstractExtension implements GlobalsInterface
         return ($urlHost && $siteHost !== $urlHost);
     }
 
-    /**
-     * @param integer $seed
-     * @param array|float $options Number or list of items to randomly select.
-     *
-     * @return mixed
-     */
-    public function seededRandom(int $seed, array|int $options = 1): mixed
-    {
-        srand($seed);
-
-        if (is_array($options)) {
-            return $options[rand(0, count($options) - 1)];
-        }
-
-        return rand(0, $options);
-    }
-
-    public function toArray(): array
-    {
-        return [
-            static::class => $this,
-        ];
-    }
-
     // Filters
     // ============================================================
 
-    public function getFilters()
+    public function getFilters(): array
     {
-        return [
-            new TwigFilter(
-                'camel2Kebab',
-                [ $this, 'camel2Kebab' ],
-            ),
-        ];
-    }
-
-    public function camel2Kebab($value): ?string
-    {
-        if (!is_scalar($value)) {
-            return null;
-        }
-
-        $value =  (string) $value;
-        return strtolower(preg_replace(
-            '/(?<=\d)(?=[A-Za-z])|(?<=[A-Za-z])(?=\d)|(?<=[a-z])(?=[A-Z])/',
-            '-',
-            $value,
-        ));
+        return [];
     }
 }
