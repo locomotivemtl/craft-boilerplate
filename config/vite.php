@@ -10,7 +10,7 @@ if (Craft::$app->getRequest()->getIsConsoleRequest()) {
 
 // Use the current host for dev server requests. Otherwise, fall back to the primary site.
 $host = App::env('VITE_SERVER_URL') ?? '';
-$port = App::env('VITE_SERVER_PORT') ?: '5173';
+$port = App::env('VITE_SERVER_PORT') ?: 5173;
 
 if (!$host) {
     $devServerPublic = null;
