@@ -13,8 +13,6 @@ use yii\base\Module as BaseModule;
  */
 class LocomotiveModule extends BaseModule
 {
-    public static LocomotiveModule $services;
-
     public function init(): void
     {
         parent::init();
@@ -22,10 +20,6 @@ class LocomotiveModule extends BaseModule
         // Declare aliases
         Craft::setAlias('@locomotive', __DIR__);
         Craft::setAlias('@modules/locomotive', __DIR__);
-
-        // Prepare declaration of sub-services.
-        self::$services = $this;
-        $this->setComponents([]);
 
         // Declare the web/console controllers
         if (Craft::$app->getRequest()->getIsConsoleRequest()) {
