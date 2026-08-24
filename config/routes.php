@@ -13,7 +13,7 @@
 use craft\helpers\App;
 
 return [
-    'design-system' => !App::parseBooleanEnv(App::env('CRAFT_HIDE_DESIGN_SYSTEM')
+    'design-system' => !App::parseBooleanEnv(App::env('CRAFT_HIDE_DESIGN_SYSTEM'))
         ? ['template' => 'design-system']
         : false,
 ];
