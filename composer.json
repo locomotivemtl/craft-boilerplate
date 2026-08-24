@@ -25,10 +25,12 @@
         "php": ">=8.2",
         "craftcms/aws-s3": "^2.2",
         "craftcms/ckeditor": "^4.8.0",
-        "craftcms/cms": "^5.0.0",
-        "ether/seo": "^5.0",
+        "craftcms/cms": "5.10.14",
         "mmikkel/cp-clearcache": "^2.0",
-        "nystudio107/craft-vite": "^5.0",
+        "nystudio107/craft-vite": "5.0.2",
+        "putyourlightson/craft-dashboard-begone": "^3.0.0",
+        "vaersaagod/seomate": "^3.3.1",
+        "verbb/expanded-singles": "^3.0.3",
         "vlucas/phpdotenv": "^5.4.0"
     },
     "require-dev": {
@@ -56,5 +58,12 @@
         },
         "optimize-autoloader": true,
         "sort-packages": true
-    }
+    },
+    "repositories": [
+        {
+            "type": "composer",
+            "url": "https://composer.craftcms.com",
+            "canonical": false
+        }
+    ]
 }
