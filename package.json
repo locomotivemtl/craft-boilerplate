@@ -13,37 +13,36 @@
         "format": "npx lint-staged"
     },
     "engines": {
-        "node": ">=20.10",
-        "npm": ">=8.0"
+        "node": ">=24",
+        "npm": ">=11"
     },
     "dependencies": {
-        "@locomotivemtl/component-manager": "^1.0.1",
-        "@locomotivemtl/grid-helper": "^1.0.0",
-        "@nanostores/persistent": "^1.0.0",
+        "@locomotivemtl/component-manager": "^1.1.0",
+        "@locomotivemtl/grid-helper": "^1.1.0",
+        "@nanostores/persistent": "^1.3.5",
         "@swup/forms-plugin": "^3.6.0",
-        "@swup/preload-plugin": "^3.2.11",
+        "@swup/preload-plugin": "^3.2.12",
         "@swup/scripts-plugin": "^2.1.0",
         "locomotive-scroll": "^5.0.1",
-        "nanostores": "^1.0.1",
-        "swup": "^4.8.2"
+        "nanostores": "^1.5.5",
+        "swup": "^4.10.0"
     },
     "devDependencies": {
-        "@locomotivemtl/postcss-helpers-functions": "^1.0.2",
-        "@tailwindcss/nesting": "^0.0.0-insiders.565cd3e",
-        "@tailwindcss/vite": "^4.1.4",
-        "@types/node": "^22.15.18",
-        "@zackad/prettier-plugin-twig": "^0.17.0",
-        "autoprefixer": "^10.4.20",
-        "dotenv": "^16.5.0",
-        "glob": "^11.0.0",
+        "@locomotivemtl/postcss-helpers-functions": "^1.0.4",
+        "@tailwindcss/vite": "^4.3.3",
+        "@types/node": "^26.6.5",
+        "@zackad/prettier-plugin-twig": "^0.18.0",
+        "autoprefixer": "^10.6.1",
+        "dotenv": "^18.0.9",
+        "glob": "^13.0.6",
         "postcss-utopia": "^1.1.0",
-        "prettier": "^3.5.1",
-        "prettier-plugin-tailwindcss": "^0.6.11",
-        "simple-git-hooks": "^2.13.0",
+        "prettier": "^3.9.10",
+        "prettier-plugin-tailwindcss": "^0.8.1",
+        "simple-git-hooks": "^2.14.0",
         "tailwindcss": "^4.1.4",
-        "vite": "^6.3.5",
-        "vite-svg-sprite-wrapper": "^1.4.1",
-        "vite-tsconfig-paths": "^5.1.4"
+        "vite": "^6.4.5",
+        "vite-svg-sprite-wrapper": "^1.5.0",
+        "vite-tsconfig-paths": "^6.1.1"
     },
     "simple-git-hooks": {
         "pre-commit": "npm run format"
@@ -54,5 +53,9 @@
             "php ./vendor/bin/php-cs-fixer fix --config=.php-cs-fixer.dist.php --path-mode=intersection",
             "php ./vendor/bin/php-cs-fixer fix --config=.php-cs-fixer.dist.php --path-mode=intersection --dry-run"
         ]
+    },
+    "allowScripts": {
+        "esbuild@0.25.12": true,
+        "simple-git-hooks@2.14.0": true
     }
 }
